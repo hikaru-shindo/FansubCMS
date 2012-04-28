@@ -32,9 +32,11 @@ class Projects_Model_Screenshot extends Projects_Model_Base_Screenshot
                 realpath(UPLOAD_PATH . '/screenshots/') . DIRECTORY_SEPARATOR .
                  $file);
             }
-            $view = Zend_Layout::getMvcInstance()->getView();
-            $this->screenshot = $view->baseUrl() . '/upload/screenshots/' .
-             $values['screen'];
+
+            if(! empty($values['screen'])) {
+                $view = Zend_Layout::getMvcInstance()->getView();
+                $this->screenshot = $view->baseUrl('/upload/screenshots/' . $values['screen']);
+            }
         }
         $this->save();
     }
