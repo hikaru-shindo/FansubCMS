@@ -1,5 +1,7 @@
 = FansubCMS
 
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/hikaru-shindo/FansubCMS/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/hikaru-shindo/FansubCMS/?branch=master)
+
 FansubCMS is a CMS designed for the needs of Fansubbers
 and written in PHP with the Zend PHP Framework licensed
 under the GNU GPL Version 3 which is enclosed to the repository
