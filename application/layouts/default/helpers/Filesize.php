@@ -1,7 +1,7 @@
 <?php
-class FansubCMS_View_Helper_Filesize extends Zend_View_Helper_Abstract 
+class FansubCMS_View_Helper_Filesize extends Zend_View_Helper_Abstract
 {
-    
+
     /**
      * Return human readable sizes
      *
@@ -21,20 +21,20 @@ class FansubCMS_View_Helper_Filesize extends Zend_View_Helper_Abstract
         $systems['bi']['prefix'] = array('B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB');
         $systems['bi']['size']   = 1024;
         $sys = isset($systems[$system]) ? $systems[$system] : $systems['si'];
-     
+
         // Max unit to display
         $depth = count($sys['prefix']) - 1;
         if ($max && false !== $d = array_search($max, $sys['prefix'])) {
             $depth = $d;
         }
-     
+
         // Loop
         $i = 0;
         while ($size >= $sys['size'] && $i < $depth) {
             $size /= $sys['size'];
             $i++;
         }
-     
+
         return sprintf($retstring, $size, $sys['prefix'][$i]);
     }
 }

@@ -16,9 +16,9 @@
  *  along with FansubCMS.  If not, see <http://www.gnu.org/licenses/>
  */
 
-class User_AdminController extends FansubCMS_Controller_Action 
+class User_AdminController extends FansubCMS_Controller_Action
 {
-    public function indexAction() 
+    public function indexAction()
     {
         $this->view->pageTitle = $this->translate('user_list_headline');
         $table = Doctrine_Core::getTable('User_Model_User');
@@ -44,7 +44,7 @@ class User_AdminController extends FansubCMS_Controller_Action
         }
     }
 
-    public function deleteAction() 
+    public function deleteAction()
     {
         $this->view->pageTitle = $this->translate('user_delete_headline');
         $id = $this->request->getParam('id');

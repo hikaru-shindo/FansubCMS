@@ -16,9 +16,9 @@
  *  along with FansubCMS.  If not, see <http://www.gnu.org/licenses/>
  */
 
-class Projects_AdminController extends FansubCMS_Controller_Action 
+class Projects_AdminController extends FansubCMS_Controller_Action
 {
-    public function indexAction() 
+    public function indexAction()
     {
         $this->view->pageTitle = $this->translate('project_list_headline');
         $table = Doctrine_Core::getTable('Projects_Model_Project');
@@ -26,7 +26,7 @@ class Projects_AdminController extends FansubCMS_Controller_Action
         $this->view->query = $table->createQuery();
     }
 
-    public function addAction() 
+    public function addAction()
     {
         $this->view->pageTitle = $this->translate('project_add_headline');
         $this->view->form = new Projects_Form_EditProject(array(), true);
@@ -44,7 +44,7 @@ class Projects_AdminController extends FansubCMS_Controller_Action
         }
     }
 
-    public function deleteAction() 
+    public function deleteAction()
     {
         $this->view->pageTitle = $this->translate('project_delete_headline');
         $id = $this->request->getParam('id');
@@ -66,7 +66,7 @@ class Projects_AdminController extends FansubCMS_Controller_Action
         }
     }
 
-    public function editAction() 
+    public function editAction()
     {
         $this->view->pageTitle = $this->translate('project_edit_headline');
         $id = $this->getRequest()->getParam('id');
@@ -78,7 +78,7 @@ class Projects_AdminController extends FansubCMS_Controller_Action
         }
         $pArr = $p->toArray();
         $pArr['Projects_Model_Leader'] = $p->getLeaders();
-        
+
         $this->view->form = new Projects_Form_EditProject($pArr);
         $req = $this->getRequest();
         if($req->isPost()) { // there are profile updates
@@ -95,22 +95,22 @@ class Projects_AdminController extends FansubCMS_Controller_Action
         }
     }
 
-    public function episodesAction() 
+    public function episodesAction()
     {
         $id = $this->request->getParam('id');
 
         if(!empty($id)) {
             $project = Doctrine_Query::create()->from('Projects_Model_Project p')->where('p.id = ?', $id)->fetchOne();
-            
+
             $this->view->pageTitle = $this->translate('project_admin_episodes_headline',array('name' => $project->name));
             $this->view->all = false;
         } else {
             $this->view->pageTitle = $this->translate('project_admin_episodes_headline_2');
             $this->view->all = true;
         }
-        
+
         $table = Doctrine_Core::getTable('Projects_Model_Episode');
-        
+
         $query = $table->createQuery();
         $query->select('*, title as name, p.name as project')
         ->leftJoin('Projects_Model_Episode.Projects_Model_Project p')
@@ -118,11 +118,11 @@ class Projects_AdminController extends FansubCMS_Controller_Action
         if (! empty($id)) {
             $query->where('Projects_Model_Episode.project_id = ?', $id);
         }
-        
+
         $this->view->query = $query;
     }
-    
-    public function addepisodeAction() 
+
+    public function addepisodeAction()
     {
         $this->view->pageTitle = $this->translate('project_addepisode_headline');
         $this->view->form = new Projects_Form_EditProjectEpisode(array(), true);
@@ -140,7 +140,7 @@ class Projects_AdminController extends FansubCMS_Controller_Action
         }
     }
 
-    public function deleteepisodeAction() 
+    public function deleteepisodeAction()
     {
         $this->view->pageTitle = $this->translate('project_deleteepisode_headline');
         $id = $this->request->getParam('id');
@@ -162,7 +162,7 @@ class Projects_AdminController extends FansubCMS_Controller_Action
         }
     }
 
-    public function editepisodeAction() 
+    public function editepisodeAction()
     {
         $this->view->pageTitle = $this->translate('project_editepisode_headline');
         $id = $this->getRequest()->getParam('id');
@@ -177,9 +177,9 @@ class Projects_AdminController extends FansubCMS_Controller_Action
                 ->select('er.*, er.id as codec, er.updated_by as updater')
                 ->from('Projects_Model_EpisodeRelease er')
                 ->where('er.episode_id = ?', $p->id);
-        
+
         $this->view->episodeId = $p->id;
-        
+
         if($this->request->isPost()) { // there are profile updates
             if($this->view->form->isValid($this->request->getPost())) {
                 $values = $this->view->form->getValues();
@@ -192,11 +192,11 @@ class Projects_AdminController extends FansubCMS_Controller_Action
         }
     }
 
-    public function addEpisodeReleaseAction() 
+    public function addEpisodeReleaseAction()
     {
         $this->view->pageTitle = $this->translate('project_add-episode-release_headline');
         $this->view->form = new Projects_Form_EditProjectEpisodeRelease(array(), true);
-        
+
         $id = $this->getRequest()->getParam('id');
         $table = Doctrine_Core::getTable('Projects_Model_Episode');
         $p = $table->findOneBy('id', $id ? $id : 0);
@@ -204,7 +204,7 @@ class Projects_AdminController extends FansubCMS_Controller_Action
             $this->session->message = $this->translate('project_episode_not_existent');
             $this->_helper->redirector->gotoSimple('episodes','admin','projects');
         }
-        
+
         $req = $this->getRequest();
         if($req->isPost()) { // there are profile updates
             if($this->view->form->isValid($_POST)) {
@@ -220,7 +220,7 @@ class Projects_AdminController extends FansubCMS_Controller_Action
         }
     }
 
-    public function deleteEpisodeReleaseAction() 
+    public function deleteEpisodeReleaseAction()
     {
         $this->view->pageTitle = $this->translate('project_delete-episode-release_headline');
         $id = $this->request->getParam('id');
@@ -242,8 +242,8 @@ class Projects_AdminController extends FansubCMS_Controller_Action
             $this->_helper->redirector->gotoSimple('episodes','admin','projects');
         }
     }
-    
-    public function editEpisodeReleaseAction() 
+
+    public function editEpisodeReleaseAction()
     {
         $this->view->pageTitle = $this->translate('project_edit-episode-release_headline');
         $id = $this->getRequest()->getParam('id');
@@ -259,7 +259,7 @@ class Projects_AdminController extends FansubCMS_Controller_Action
                 ->select('er.*, er.id as codec, er.updated_by as updater')
                 ->from('Projects_Model_EpisodeRelease er')
                 ->where('er.episode_id = ?', $p->id);
-        
+
         if($this->request->isPost()) { // there are profile updates
             if($this->view->form->isValid($this->request->getPost())) {
                 $values = $this->view->form->getValues();
@@ -271,18 +271,18 @@ class Projects_AdminController extends FansubCMS_Controller_Action
             }
         }
     }
-    
-    public function screenshotsAction() 
+
+    public function screenshotsAction()
     {
         $this->view->pageTitle = $this->translate('project_screenshots_headline');
         $table = Doctrine_Core::getTable('Projects_Model_Screenshot');
         $id = $this->request->getParam('id', false);
-        
+
         $query = $table->createQuery()
                 ->select('id, description, screenshot as screen, p.name as project')
                 ->leftJoin('Projects_Model_Screenshot.Projects_Model_Project p')
                 ->orderBy('p.name ASC, id ASC');
-                
+
         if($id) {
             $query->where('p.id = ?', $id);
         }
@@ -290,7 +290,7 @@ class Projects_AdminController extends FansubCMS_Controller_Action
         $this->view->query = $query;
     }
 
-    public function addscreenshotAction() 
+    public function addscreenshotAction()
     {
         $this->view->pageTitle = $this->translate('project_addscreenshot_headline');
         $this->view->form = new Projects_Form_EditProjectScreenshot(array(), true);
@@ -311,7 +311,7 @@ class Projects_AdminController extends FansubCMS_Controller_Action
         }
     }
 
-    public function deletescreenshotAction() 
+    public function deletescreenshotAction()
     {
         $this->view->pageTitle = $this->translate('project_deletescreenshot_headline');
         $id = $this->request->getParam('id');
@@ -333,7 +333,7 @@ class Projects_AdminController extends FansubCMS_Controller_Action
         }
     }
 
-    public function editscreenshotAction() 
+    public function editscreenshotAction()
     {
         $this->view->pageTitle = $this->translate('project_editscreenshot_headline');
         $id = $this->getRequest()->getParam('id');
@@ -357,7 +357,7 @@ class Projects_AdminController extends FansubCMS_Controller_Action
             }
         }
     }
-    
+
     public function teamAction()
     {
         $id = $this->getRequest()->getParam('id');
@@ -367,22 +367,22 @@ class Projects_AdminController extends FansubCMS_Controller_Action
             $this->session->message = $this->translate('project_not_existent');
             $this->_helper->redirector->gotoSimple('index','admin','projects');
         }
-        
+
         $this->checkAllowed($p, 'team');
-        
+
         $this->view->pageTitle = $this->translate('project_team_headline', array('name' => $p->name));
-        
+
         $leaders = array();
         foreach($p->Projects_Model_Leader as $leader) {
             $leaders[] = $leader->User_Model_User;
         }
-        
+
         $this->view->leaders = $leaders;
         $this->view->team = $p->Projects_Model_User;
-        
+
         $this->view->project = $p;
     }
-    
+
     public function addteammemberAction()
     {
         $id = $this->getRequest()->getParam('pid');
@@ -392,32 +392,32 @@ class Projects_AdminController extends FansubCMS_Controller_Action
             $this->session->message = $this->translate('project_not_existent');
             $this->_helper->redirector->gotoSimple('team','admin','projects');
         }
-        
+
         $this->checkAllowed($p, 'addteammember');
         $this->view->pageTitle = $this->translate('project_addteammember_headline', array('name' => $p->name));
-        
+
         $form = new Projects_Form_EditTeamMember($p, array(), true);
-        
+
         if($this->request->isPost()) {
             if($form->isValid($_POST)) {
                 $values = $form->getValues();
-                
+
                 $pu = new Projects_Model_User();
                 $pu->project_id = $p->id;
                 $pu->user_id = $values['user'];
                 $pu->function = $values['function'];
                 $pu->save();
-                
+
                 $this->session->message = $this->translate('project_admin_addteammember_success');
                 $this->_helper->redirector->gotoSimple('team','admin','projects', array('id' => $id));
             } else {
                 $this->view->message = $this->translate('project_admin_addteammember_failed');
             }
         }
-        
+
         $this->view->form = $form;
     }
-    
+
     public function editteammemberAction()
     {
         $pid = $this->getRequest()->getParam('pid', 0);
@@ -435,31 +435,31 @@ class Projects_AdminController extends FansubCMS_Controller_Action
         }
         $this->checkAllowed($pu->Projects_Model_Project, 'editteammember');
         $this->view->pageTitle = $this->translate('project_editteammember_headline', array('name' => $pu->Projects_Model_Project->name));
-        
+
         $this->view->user = $pu->User_Model_User;
-        
+
         $form = new Projects_Form_EditTeamMember($pu->Projects_Model_Project, $pu->toArray(), false);
-        
+
         if($this->request->isPost()) {
             if($form->isValid($_POST)) {
                 $values = $form->getValues();
 
                 $pu->function = $values['function'];
                 $pu->save();
-                
+
                 $this->session->message = $this->translate('project_admin_editteammember_success');
                 $this->_helper->redirector->gotoSimple('team','admin','projects', array('id' => $pid));
             } else {
                 $this->view->message = $this->translate('project_admin_editteammember_failed');
             }
         }
-        
+
         $this->view->form = $form;
     }
-    
+
     public function deleteteammemberAction()
     {
-        
+
         $pid = $this->getRequest()->getParam('pid', 0);
         $uid = $this->request->getParam('uid', 0);
         $table = Doctrine_Core::getTable('Projects_Model_User');
@@ -474,7 +474,7 @@ class Projects_AdminController extends FansubCMS_Controller_Action
             $this->_helper->redirector->gotoSimple('index','admin','projects');
         }
         $this->checkAllowed($pu->Projects_Model_Project, 'deleteteammember');
-        
+
         $this->view->pageTitle = $this->translate('project_deleteteammember_headline', array('name' => $pu->Projects_Model_Project->name));
 
         $this->view->form = new FansubCMS_Form_Confirmation();
@@ -487,7 +487,7 @@ class Projects_AdminController extends FansubCMS_Controller_Action
              $this->_helper->redirector->gotoSimple('team','admin','projects', array('id' => $pid));
         }
     }
-    
+
     public function taskTypeAction()
     {
         $id = $this->getRequest()->getParam('id');
@@ -497,20 +497,20 @@ class Projects_AdminController extends FansubCMS_Controller_Action
             $this->session->message = $this->translate('project_not_existent');
             $this->_helper->redirector->gotoSimple('index','admin','projects');
         }
-        
+
         $this->checkAllowed($p, 'task-type');
-        
+
         $this->view->pageTitle = $this->translate('project_task-type_headline', array('name' => $p->name));
 
         $query = Doctrine_Query::create();
         $query->select('ptt.id, ptt.title, ptt.description')
               ->from('Projects_Model_TaskType ptt')
               ->where('ptt.project_id = ?', $id);
-        
+
         $this->view->query = $query;
         $this->view->project = $p;
     }
-    
+
     public function addTaskTypeAction()
     {
         $id = $this->getRequest()->getParam('pid');
@@ -520,32 +520,32 @@ class Projects_AdminController extends FansubCMS_Controller_Action
             $this->session->message = $this->translate('project_not_existent');
             $this->_helper->redirector->gotoSimple('index','admin','projects');
         }
-        
+
         $this->checkAllowed($p, 'add-task-type');
         $this->view->pageTitle = $this->translate('project_add-task-type_headline',array('name' => $p->name));
-        
+
         $form = new Projects_Form_EditTaskType(array(), true);
-        
+
         if($this->request->isPost()) {
             if($form->isValid($this->request->getPost())) {
                 $values = $form->getValues();
-                
+
                 $ptt = new Projects_Model_TaskType();
                 $ptt->project_id = $p->id;
                 $ptt->title = $values['title'];
                 $ptt->description = $values['description'];
                 $ptt->save();
-                
+
                 $this->session->message = $this->translate('project_admin_add-task-type_success');
                 $this->_helper->redirector->gotoSimple('task-type','admin','projects', array('id' => $id));
             } else {
                 $this->view->message = $this->translate('project_admin_add-task-type_failed');
             }
         }
-        
+
         $this->view->form = $form;
     }
-    
+
     public function editTaskTypeAction()
     {
         $id = $this->request->getParam('id', 0);
@@ -560,9 +560,9 @@ class Projects_AdminController extends FansubCMS_Controller_Action
         }
         $this->checkAllowed($ptt->Projects_Model_Project, 'edit-task-type');
         $this->view->pageTitle = $this->translate('project_edit-task-type_headline', array('name' => $ptt->Projects_Model_Project->name));
-        
+
         $form = new Projects_Form_EditTaskType($ptt->toArray(), false);
-        
+
         if($this->request->isPost()) {
             if($form->isValid($this->request->getPost())) {
                 $values = $form->getValues();
@@ -570,17 +570,17 @@ class Projects_AdminController extends FansubCMS_Controller_Action
                 $ptt->title = $values['title'];
                 $ptt->description = $values['description'];
                 $ptt->save();
-                
+
                 $this->session->message = $this->translate('project_admin_edit-task-type_success');
                 $this->_helper->redirector->gotoSimple('task-type','admin','projects', array('id' => $ptt->project_id));
             } else {
                 $this->view->message = $this->translate('project_admin_edit-task-type_failed');
             }
         }
-        
+
         $this->view->form = $form;
     }
-    
+
     public function deleteTaskTypeAction()
     {
         $id = $this->request->getParam('id', 0);
@@ -594,7 +594,7 @@ class Projects_AdminController extends FansubCMS_Controller_Action
             $this->_helper->redirector->gotoSimple('index','admin','projects');
         }
         $this->checkAllowed($ptt->Projects_Model_Project, 'delete-task-type');
-        
+
         $this->view->pageTitle = $this->translate('project_delete-task-type_headline', array('name' => $ptt->Projects_Model_Project->name));
 
         $this->view->form = new FansubCMS_Form_Confirmation();
@@ -607,7 +607,7 @@ class Projects_AdminController extends FansubCMS_Controller_Action
              $this->_helper->redirector->gotoSimple('task-type','admin','projects', array('id' => $ptt->project_id));
         }
     }
-    
+
     public function tasksAction()
     {
         $id = $this->getRequest()->getParam('id');
@@ -617,9 +617,9 @@ class Projects_AdminController extends FansubCMS_Controller_Action
             $this->session->message = $this->translate('project_not_existent');
             $this->_helper->redirector->gotoSimple('index','admin','projects');
         }
-        
+
         $this->checkAllowed($p, 'tasks');
-        
+
         $this->view->pageTitle = $this->translate('project_tasks_headline', array('name' => $p->name));
 
         $select = 'pt.id, ptt.title as type_title, pt.done, pt.comment, u.name as username, r.number as number, r.version as version';
@@ -629,7 +629,7 @@ class Projects_AdminController extends FansubCMS_Controller_Action
               ->from('Projects_Model_Task pt')
               ->leftJoin('pt.Projects_Model_TaskType ptt')
               ->leftJoin('pt.User_Model_User u');
-        
+
         if($p->project_type == Projects_Model_Project::TYPE_SCANLATION) {
             $query->leftJoin('pt.Projects_Model_Chapter r');
         } else {
@@ -637,11 +637,11 @@ class Projects_AdminController extends FansubCMS_Controller_Action
         }
         $query->where('ptt.project_id = ?', $id)
               ->orderBy('pt.done ASC');
-        
+
         $this->view->query = $query;
         $this->view->project = $p;
     }
-    
+
     public function addTaskAction()
     {
         $id = $this->getRequest()->getParam('pid');
@@ -651,18 +651,18 @@ class Projects_AdminController extends FansubCMS_Controller_Action
             $this->session->message = $this->translate('project_not_existent');
             $this->_helper->redirector->gotoSimple('index','admin','projects');
         }
-        
+
         $this->checkAllowed($p, 'add-task');
         $this->view->pageTitle = $this->translate('project_add-task_headline', array('name' => $p->name));
-        
+
         $form = new Projects_Form_EditTask($p, array(), true);
-        
+
         if($this->request->isPost()) {
             if($form->isValid($this->request->getPost())) {
                 $values = $form->getValues();
-                
+
                 $pt = new Projects_Model_Task();
-                
+
                 $pt->user_id = $values['user'];
                 $pt->task_id = $values['type'];
                 $pt->done = $values['done'];
@@ -672,19 +672,19 @@ class Projects_AdminController extends FansubCMS_Controller_Action
                 } else {
                     $pt->episode_id = $values['release'];
                 }
-                
+
                 $pt->save();
-                
+
                 $this->session->message = $this->translate('project_admin_add-task_success');
                 $this->_helper->redirector->gotoSimple('tasks','admin','projects', array('id' => $id));
             } else {
                 $this->view->message = $this->translate('project_admin_add-task_failed');
             }
         }
-        
+
         $this->view->form = $form;
     }
-    
+
     public function editTaskAction()
     {
         $id = $this->request->getParam('id', 0);
@@ -701,18 +701,18 @@ class Projects_AdminController extends FansubCMS_Controller_Action
         $this->checkAllowed($pt->Projects_Model_TaskType->Projects_Model_Project, 'edit-task');
         $this->checkAllowed($pt, 'edit');
         $this->view->pageTitle = $this->translate('project_edit-task_headline', array('name' => $pt->Projects_Model_TaskType->Projects_Model_Project->name));
-        
+
         $form = new Projects_Form_EditTask($pt->Projects_Model_TaskType->Projects_Model_Project, $pt->toArray(), false);
-        
+
         if($this->request->isPost()) {
             if($form->isValid($this->request->getPost())) {
                 $values = $form->getValues();
-                
+
                 $pt->task_id = $values['type'];
                 $pt->user_id = $values['user'];
                 $pt->done = $values['done'];
                 $pt->comment = $values['comment'];
-                
+
                 switch($pt->Projects_Model_TaskType->Projects_Model_Project) {
                     case Projects_Model_Project::TYPE_SCANLATION:
                         $pt->chapter_id = $values['release'];
@@ -721,19 +721,19 @@ class Projects_AdminController extends FansubCMS_Controller_Action
                     default:
                         $pt->episode_id = $values['release'];
                 }
-                
+
                 $pt->save();
-                
+
                 $this->session->message = $this->translate('project_admin_edit-task_success');
                 $this->_helper->redirector->gotoSimple('tasks','admin','projects', array('id' => $pt->Projects_Model_TaskType->project_id));
             } else {
                 $this->view->message = $this->translate('project_admin_edit-task_failed');
             }
         }
-        
+
         $this->view->form = $form;
     }
-    
+
     public function deleteTaskAction()
     {
         $id = $this->request->getParam('id', 0);
@@ -749,7 +749,7 @@ class Projects_AdminController extends FansubCMS_Controller_Action
             $this->_helper->redirector->gotoSimple('index','admin','projects');
         }
         $this->checkAllowed($pt->Projects_Model_TaskType->Projects_Model_Project, 'delete-task');
-        
+
         $this->view->pageTitle = $this->translate('project_delete-task_headline', array('name' => $pt->Projects_Model_TaskType->Projects_Model_Project->name));
 
         $this->view->form = new FansubCMS_Form_Confirmation();
@@ -762,22 +762,22 @@ class Projects_AdminController extends FansubCMS_Controller_Action
              $this->_helper->redirector->gotoSimple('tasks','admin','projects', array('id' => $pt->Projects_Model_TaskType->project_id));
         }
     }
-    
+
     public function myTasksAction()
     {
         $this->view->pageTitle = $this->translate('project_my-tasks_headline');
         $identity = Zend_Auth::getInstance()->getIdentity();
-        
+
         $q = Doctrine_Query::create()
                 ->select('id,
                     comment,
                     done,
                     updated_at,
                     created_at,
-                    p.name as project, 
-                    p.name_jp as project_jp, 
-                    e.number as number, 
-                    e.version as version, 
+                    p.name as project,
+                    p.name_jp as project_jp,
+                    e.number as number,
+                    e.version as version,
                     tt.title as task')
                 ->from('Projects_Model_Task t')
                 ->leftJoin('t.Projects_Model_TaskType tt')
@@ -790,7 +790,7 @@ class Projects_AdminController extends FansubCMS_Controller_Action
                 ->andWhere('cr.released_at IS NULL')
                 ->andWhere('er.released_at IS NULL')
                 ->orderBy('p.name, c.number ASC, e.number ASC');
-        
+
         $this->view->query = $q;
     }
 }

@@ -18,8 +18,10 @@
 
 ini_set("short_open_tag", true);
 
-// Require composer autoload
-require_once('vendor/autoload.php');
+if(file_exists("../vendor/autoload.php")) {
+    // Require composer autoload
+    require_once('../vendor/autoload.php');
+}
 
 // Define path to application directory
 defined('APPLICATION_PATH')
@@ -40,7 +42,7 @@ set_include_path(implode(PATH_SEPARATOR, array(
         get_include_path(),
 )));
 /** Zend_Application */
-require_once 'Zend/Application.php';  
+require_once 'Zend/Application.php';
 
 // Create application, bootstrap, and run
 $application = new Zend_Application(
@@ -51,7 +53,7 @@ try {
     $application->bootstrap()
             ->run();
 } catch(Zend_Config_Exception $e) {
-	if(!headers_sent()) {
+    if(!headers_sent()) {
         header('Content-Type: text/plain');
     }
 
@@ -69,7 +71,7 @@ try {
         print_r($e->getTrace());
     }
 } catch (Doctrine_Exception $e) {
-	if(!headers_sent()) {
+    if(!headers_sent()) {
         header('Content-Type: text/plain');
     }
 

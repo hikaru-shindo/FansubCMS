@@ -5,7 +5,7 @@
 
 /* Layout commons */
 * {
-    
+
 }
 
 #root {
@@ -19,7 +19,7 @@
 body {
     background-color: #17141D;
     background-image: url(../images/bg.png);
-    background-repeat: repeat-x; 
+    background-repeat: repeat-x;
 }
 
 #layout-content .paginationControl {

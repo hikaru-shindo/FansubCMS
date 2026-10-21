@@ -44,13 +44,13 @@ class FansubCMS_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
     public function preDispatch(Zend_Controller_Request_Abstract $request)
     {
         $this->_initAcl();
-        
+
         if($this->_auth->hasIdentity()) {
             $ident = $this->_auth->getIdentity();
             $date = new Zend_Date();
             $ident->last_login = $date->get(DATABASE_DATE_FORMAT);
             $ident->save();
-        } 
+        }
         if($request->getControllerName() != 'admin' && $request->getModuleName() != 'admin') return; // if this is not admin skip the rest
         if(!$this->_auth->hasIdentity() && !($request->getControllerName() == 'auth' && $request->getActionName() == 'login' && $request->getModuleName() == 'admin')) {
             $redirect = new Zend_Controller_Action_Helper_Redirector();
@@ -64,7 +64,7 @@ class FansubCMS_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
             throw new FansubCMS_Exception_Denied('The user is not allowd to do this');
         }
     }
-    
+
     /**
      * init acl
      * @return void
@@ -85,7 +85,7 @@ class FansubCMS_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
             $ch->setCacheTemplate('Acl_Settings', $frontend);
         }
         $cache = $ch->getCache('Acl_Settings');
-        
+
         $config = $cache->load('Acl');
         if (!$config) {
             $config = array();
@@ -114,7 +114,7 @@ class FansubCMS_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
             $role = new Zend_Acl_Role('fansubcms_user_custom_role_logged_in_user');
             $inherit = $ident->getRoles();
             $inherit[] = 'fansubcms_custom_role_default'; // every user is in this role
-            
+
             foreach ($inherit as $key => $value) {
                 if (!$acl->hasRole($value)) {
                     unset($inherit[$key]);

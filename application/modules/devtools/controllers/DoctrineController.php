@@ -29,7 +29,7 @@ class Devtools_DoctrineController extends FansubCMS_Controller_Action
         $this->_helper->layout()->disableLayout();
         set_time_limit(0);
     }
-    
+
     public function preDispatch ()
     {
         $this->view->partialName = $this->getRequest()->getParam('action');
@@ -44,7 +44,7 @@ class Devtools_DoctrineController extends FansubCMS_Controller_Action
             $this->view->showMenu = true;
         }
     }
-    
+
     public function migrationAction ()
     {
         $pdata = new stdClass();
@@ -70,7 +70,7 @@ class Devtools_DoctrineController extends FansubCMS_Controller_Action
         $this->view->partialData = $pdata;
         $this->_forward('index');
     }
-    
+
     public function generatemigrationsAction ()
     {
         $api = Install_Api_DoctrineTool::getInstance();
@@ -97,7 +97,7 @@ class Devtools_DoctrineController extends FansubCMS_Controller_Action
         $this->view->partialData = $pdata;
         $this->_forward('index');
     }
-    
+
     public function generatemodelsAction ()
     {
         $this->view->partialData = new stdClass();
@@ -120,23 +120,23 @@ class Devtools_DoctrineController extends FansubCMS_Controller_Action
             $this->_forward('index');
         }
     }
-    
+
     public function fixtureAction ()
     {
         $pdata = new stdClass();
         $api = Install_Api_DoctrineTool::getInstance();
-        
+
         $fixtures = glob(APPLICATION_PATH . DIRECTORY_SEPARATOR . 'resource' . DIRECTORY_SEPARATOR . 'fixtures' . DIRECTORY_SEPARATOR . '*.yml');
         if(count($fixtures)) {
             $pdata->hasFixtures = true;
         } else {
             $pdata->hasFixtures = false;
         }
-        
+
         $this->view->partialData = $pdata;
         $this->_forward('index');
     }
-    
+
     public function importAction()
     {
         $this->view->partialData = new stdClass();
@@ -166,7 +166,7 @@ class Devtools_DoctrineController extends FansubCMS_Controller_Action
             $this->_forward('index');
         }
     }
-    
+
     public function dumpAction()
     {
         $this->view->partialData = new stdClass();
@@ -189,14 +189,14 @@ class Devtools_DoctrineController extends FansubCMS_Controller_Action
             $this->_forward('index');
         }
     }
-    
-    public function setmigrationversionAction() 
+
+    public function setmigrationversionAction()
     {
         $this->view->title = "Set the migration version of the databse";
-        
+
         $version = $this->getRequest()->getParam('version', null);
         $api = Install_Api_DoctrineTool::getInstance();
-        
+
         if(is_null($version)) {
             $this->view->partialData = new stdClass();
             $this->view->message = 'Please provide parameter "version". If you provide "current" it means latest version.';

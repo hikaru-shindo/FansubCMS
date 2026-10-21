@@ -10,7 +10,7 @@ class Version3 extends Doctrine_Migration_Base
              ));
 
     }
-    
+
     public function down()
     {
         $this->removeColumn('projects', 'name_slug');

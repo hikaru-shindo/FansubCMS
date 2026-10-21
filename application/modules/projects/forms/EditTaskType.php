@@ -27,7 +27,7 @@ class Projects_Form_EditTaskType extends Zend_Form
                 ->setMethod('post')
                 ->setAttrib('id', $insert ? 'add-task-type' : 'edit-task-type');
 
-        # title      
+        # title
         $title = $this->createElement('text', 'title')
                 ->addFilter('StripTags')
                 ->addFilter('StringTrim')
@@ -45,7 +45,7 @@ class Projects_Form_EditTaskType extends Zend_Form
                 ->setRequired(true)
                 ->setValue(isset($values['title']) ? $values['title'] : null)
                 ->setLabel('project_admin_field_task_title');
-        
+
         # desctiption
         $description = $this->createElement('textarea', 'description');
         $description->setValue(isset($values['description']) ? $values['description'] : null)
@@ -53,7 +53,7 @@ class Projects_Form_EditTaskType extends Zend_Form
                 ->setAttrib('cols', 40)
                 ->setAttrib('rows', 15)
                 ->setLabel('description');
-        
+
         $this->addElement($title)
         ->addElement($description)
         # edit button

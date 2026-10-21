@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+#MISE description="Stop the development environment and remove its containers"
+#
+# Any arguments are passed to `compose down`. The database volume is kept by default.
+#   mise run down             -> compose down
+#   mise run down -- -v       -> compose down -v (also deletes the database volume!)
+set -euo pipefail
+
+# shellcheck source=../lib/compose.sh
+source "$(dirname "${BASH_SOURCE[0]}")/../lib/compose.sh"
+
+echo "Using: ${compose[*]} (engine: ${engine})" >&2
+exec "${compose[@]}" down "$@"

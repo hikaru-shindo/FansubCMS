@@ -2,14 +2,14 @@
 if ($this->data->state == 1) :
     ?>
 <form action="/devtools/doctrine/dump" method="post"
-	style="padding: 15px; border: 1px solid black; background-color: #CCCCCC;">
+  style="padding: 15px; border: 1px solid black; background-color: #CCCCCC;">
 <h4>Dump data from database to YAML fixtures</h4>
 <input type="submit" name="submit" value="Dump" /></form>
 
- <?php 
+ <?php
  elseif ($this->data->state == 2) :
     ?>
-	
+
 
 <?php
 endif;

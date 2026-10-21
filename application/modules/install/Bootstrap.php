@@ -17,5 +17,5 @@
  */
 class Install_Bootstrap extends FansubCMS_Application_Module_Bootstrap
 {
-   
+
 }

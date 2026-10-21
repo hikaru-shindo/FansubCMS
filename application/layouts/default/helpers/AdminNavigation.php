@@ -13,7 +13,7 @@ class FansubCMS_View_Helper_AdminNavigation extends Zend_View_Helper_Navigation 
         $envConf = Zend_Registry::get('environmentSettings');
         $locale = $envConf->locale;
         $trans = Zend_Registry::get('Zend_Translate');
-        
+
         // add the module and addon admin menus
         $modConf = glob(APPLICATION_PATH . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR . '*' . DIRECTORY_SEPARATOR . 'configs'. DIRECTORY_SEPARATOR . 'module.ini');
         foreach($modConf as $nav) {

@@ -15,7 +15,7 @@ class Version6 extends Doctrine_Migration_Base
              'onDelete' => 'CASCADE',
              ));
         $this->addIndex('project_chapters', 'project_chapters_project_id', array(
-             'fields' => 
+             'fields' =>
              array(
               0 => 'project_id',
              ),
@@ -26,7 +26,7 @@ class Version6 extends Doctrine_Migration_Base
     {
         $this->dropForeignKey('project_chapters', 'project_chapters_project_id_projects_id');
         $this->removeIndex('project_chapters', 'project_chapters_project_id', array(
-             'fields' => 
+             'fields' =>
              array(
               0 => 'project_id',
              ),

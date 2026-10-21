@@ -1,18 +1,19 @@
 # Ignore all the cache files
 /application/data/cache/*
+!/application/data/cache/.gitkeep
 
 # Ignore sessions - they don't need to be versioned
 /application/data/sessions/*
 
 # Captchas don't need to be versioned
 /public/media/common/images/tmp/*
-!/public/media/common/images/tmp/delete.me
+!/public/media/common/images/tmp/.gitkeep
 
 # We don't need to version uploaded files
 /public/upload/*
 !/application/resource/static/
 /application/resource/static/*
-!/application/resource/static/delete.me
+!/application/resource/static/.gitkeep
 
 # Only allow default modules to be versioned
 /application/modules/*
@@ -32,23 +33,18 @@
 /application/configs/environment.ini
 /application/configs/navigation.ini
 
-# ignore Frameworks in the library
-/library/Doctrine*
-/library/Zend/**
+# Ignore additional layouts and media
+/public/media
+!/public/media/common
+!/public/media/default
+/application/layouts
+!/application/layouts/default
+/application/modules/*/delegates
+!/application/modules/*/delegates/default
+/application/modules/*/forms
+!/application/modules/*/forms/default
+/application/modules/*/views
+!/application/modules/*/views/default
 
-# Netbeans
-/nbproject/*
-
-# Eclipse project files
-.classpath
-.project
-.buildpath
-.settings/
-
-# OS generated files
-.DS_Store?
-ehthumbs.db
-Icon?
-Thumbs.db
-
+# Ignore depencies
 /vendor/

@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+#MISE description="Run the application"
+set -euo pipefail
+
+composer install

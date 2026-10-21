@@ -1,32 +1,32 @@
 <table border="1" cellpadding="2">
-	<tr>
-		<td>Dump Fixtures</td>
-		<td>
-			<a href="/devtools/doctrine/dump">Dump fixtures</a>
-		</td>
-	</tr>
-	<tr>
-		<td>Import Fixtures</td>
-		<?php
+  <tr>
+    <td>Dump Fixtures</td>
+    <td>
+      <a href="/devtools/doctrine/dump">Dump fixtures</a>
+    </td>
+  </tr>
+  <tr>
+    <td>Import Fixtures</td>
+    <?php
 if ($this->data->hasFixtures) :
     ?>
-		<td>
-			<ul>
-				<li><a href="/devtools/doctrine/import">Import with purge of database content</a></li>
-				<li><a href="/devtools/doctrine/import/append/yes">Import and append to current database content</a></li>
-			</ul>
-		</td>
-	<?php	
+    <td>
+      <ul>
+        <li><a href="/devtools/doctrine/import">Import with purge of database content</a></li>
+        <li><a href="/devtools/doctrine/import/append/yes">Import and append to current database content</a></li>
+      </ul>
+    </td>
+  <?php
  else :
     ?>
-		<td style="color: #CCCCCC;">
-    		<ul>
-    			<li>Import with purge of database content</li>
-    			<li>Import and append to current database content</li>
-    	    </ul>
-	    </td>
+    <td style="color: #CCCCCC;">
+        <ul>
+          <li>Import with purge of database content</li>
+          <li>Import and append to current database content</li>
+          </ul>
+      </td>
 <?php
 endif;
 ?>
-	</tr>
+  </tr>
 </table>

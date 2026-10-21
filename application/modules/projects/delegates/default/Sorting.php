@@ -17,12 +17,20 @@
  */
 class Projects_Delegate_Default_Sorting
 {
+    /**
+     * The HTTP request
+     *
+     * @var Zend_Controller_Request_Http
+     */
+    public $request;
+    public $settings;
+
     public function __construct($settings, $request)
     {
         $this->request = $request;
         $this->settings = $settings;
     }
-    
+
     public function sortProjects($projects)
     {
         $result = array();
@@ -43,7 +51,7 @@ class Projects_Delegate_Default_Sorting
             'licensed' => empty($result['licensed']) ? array() : $result['licensed'],
             'dropped' => empty($result['dropped']) ? array() : $result['dropped'],
         );
-        
+
         return $return;
     }
 }

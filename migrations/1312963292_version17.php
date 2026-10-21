@@ -7,63 +7,63 @@ class Version17 extends Doctrine_Migration_Base
     public function up()
     {
         $this->addIndex('news_comments', 'comment_src_idx', array(
-             'fields' => 
+             'fields' =>
              array(
               0 => 'sourcetype',
               1 => 'sourcekey',
              ),
              ));
         $this->addIndex('news', 'news_src_idx', array(
-             'fields' => 
+             'fields' =>
              array(
               0 => 'sourcetype',
               1 => 'sourcekey',
              ),
              ));
         $this->addIndex('project_chapters', 'chap_src_idx', array(
-             'fields' => 
+             'fields' =>
              array(
               0 => 'sourcetype',
               1 => 'sourcekey',
              ),
              ));
         $this->addIndex('project_chapter_releases', 'chaprel_src_idx', array(
-             'fields' => 
+             'fields' =>
              array(
               0 => 'sourcetype',
               1 => 'sourcekey',
              ),
              ));
         $this->addIndex('project_episodes', 'ep_src_idx', array(
-             'fields' => 
+             'fields' =>
              array(
               0 => 'sourcetype',
               1 => 'sourcekey',
              ),
              ));
         $this->addIndex('project_episode_releases', 'eprel_src_idx', array(
-             'fields' => 
+             'fields' =>
              array(
               0 => 'sourcetype',
               1 => 'sourcekey',
              ),
              ));
         $this->addIndex('projects', 'projects_src_idx', array(
-             'fields' => 
+             'fields' =>
              array(
               0 => 'sourcetype',
               1 => 'sourcekey',
              ),
              ));
         $this->addIndex('project_screenshots', 'screenshot_src_idx', array(
-             'fields' => 
+             'fields' =>
              array(
               0 => 'sourcetype',
               1 => 'sourcekey',
              ),
              ));
         $this->addIndex('users', 'user_src_idx', array(
-             'fields' => 
+             'fields' =>
              array(
               0 => 'sourcetype',
               1 => 'sourcekey',
@@ -74,63 +74,63 @@ class Version17 extends Doctrine_Migration_Base
     public function down()
     {
         $this->removeIndex('news_comments', 'comment_src_idx', array(
-             'fields' => 
+             'fields' =>
              array(
               0 => 'sourcetype',
               1 => 'sourcekey',
              ),
              ));
         $this->removeIndex('news', 'news_src_idx', array(
-             'fields' => 
+             'fields' =>
              array(
               0 => 'sourcetype',
               1 => 'sourcekey',
              ),
              ));
         $this->removeIndex('project_chapters', 'chap_src_idx', array(
-             'fields' => 
+             'fields' =>
              array(
               0 => 'sourcetype',
               1 => 'sourcekey',
              ),
              ));
         $this->removeIndex('project_chapter_releases', 'chaprel_src_idx', array(
-             'fields' => 
+             'fields' =>
              array(
               0 => 'sourcetype',
               1 => 'sourcekey',
              ),
              ));
         $this->removeIndex('project_episodes', 'ep_src_idx', array(
-             'fields' => 
+             'fields' =>
              array(
               0 => 'sourcetype',
               1 => 'sourcekey',
              ),
              ));
         $this->removeIndex('project_episode_releases', 'eprel_src_idx', array(
-             'fields' => 
+             'fields' =>
              array(
               0 => 'sourcetype',
               1 => 'sourcekey',
              ),
              ));
         $this->removeIndex('projects', 'projects_src_idx', array(
-             'fields' => 
+             'fields' =>
              array(
               0 => 'sourcetype',
               1 => 'sourcekey',
              ),
              ));
         $this->removeIndex('project_screenshots', 'screenshot_src_idx', array(
-             'fields' => 
+             'fields' =>
              array(
               0 => 'sourcetype',
               1 => 'sourcekey',
              ),
              ));
         $this->removeIndex('users', 'user_src_idx', array(
-             'fields' => 
+             'fields' =>
              array(
               0 => 'sourcetype',
               1 => 'sourcekey',

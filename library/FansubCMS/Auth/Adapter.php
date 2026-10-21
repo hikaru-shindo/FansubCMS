@@ -49,13 +49,13 @@ class FansubCMS_Auth_Adapter implements Zend_Auth_Adapter_Interface {
     public function authenticate()
     {
         $result = null;
-   
+
         try {
             $q = Doctrine_Query::create()
                 ->from('User_Model_User u')
                 ->where('u.name = ?', $this->_username)
                 ->andWhere('u.activated = ?','yes');
-            
+
             $user = $q->fetchOne();
             if ($user == NULL) {
                 $result = new Zend_Auth_Result(
@@ -69,7 +69,7 @@ class FansubCMS_Auth_Adapter implements Zend_Auth_Adapter_Interface {
                             $user,
                             array());
                 } else {
-                	$result = new Zend_Auth_Result(
+                    $result = new Zend_Auth_Result(
                             Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID,
                             $user,
                             array('sorry, the password you entered was invalid for user ' .

@@ -2,8 +2,10 @@
     "name": "hikaru-shindo/fansubcms",
     "description": "A CMS made for fansubbers",
     "require": {
-        "zendframework/zendframework1": "~1.12",
-        "doctrine/doctrine1": "~1.2"
+        "shardj/zf1-future": "^1.25",
+        "diablomedia/doctrine1": "^4.0",
+        "php": ">=8.2 <8.6",
+        "netcarver/textile": "^4.1.4"
     },
     "authors": [
         {
@@ -11,5 +13,15 @@
             "email": "hikaru@animeownage.de"
         }
     ],
-    "minimum-stability": "stable"
+    "minimum-stability": "stable",
+    "require-dev": {
+        "phpcompatibility/php-compatibility": "^9.3",
+        "dealerdirect/phpcodesniffer-composer-installer": "^1.2",
+        "jokkedk/zfdebug": "^1.7"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
 }

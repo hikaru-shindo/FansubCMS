@@ -37,7 +37,7 @@ class Projects_Form_EditProjectEpisode extends Zend_Form {
                 )))
                 ->setLabel('project_admin_field_episode_title')
                 ->setValue(isset($values['title']) ? $values['title'] : null);
-        
+
         # number
         $number = $this->createElement('text', 'number')
                 ->addFilter('StripTags')
@@ -71,7 +71,7 @@ class Projects_Form_EditProjectEpisode extends Zend_Form {
                 ->setRequired(true)
                 ->setValue(isset($values['version']) ? $values['version'] : '1')
                 ->setLabel('project_admin_field_episode_version');
-        
+
         # projects
         $table = Doctrine::getTable('Projects_Model_Project');
         $project = $this->createElement('select', 'project')

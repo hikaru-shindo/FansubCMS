@@ -29,13 +29,13 @@ class FansubCMS_Controller_Dispatcher_Standard extends Zend_Controller_Dispatche
 
     /**
      * The application configuration
-     * 
+     *
      * @var Zend_Config
      */
     protected $_settings;
     /**
      * Is this request an administrative request?
-     * 
+     *
      * @var boolean
      */
     protected $_isAdminRequest = false;
@@ -44,7 +44,7 @@ class FansubCMS_Controller_Dispatcher_Standard extends Zend_Controller_Dispatche
     {
          parent::__construct($params);
     }
-    
+
     /**
      * Dispatch to a controller/action
      *
@@ -74,24 +74,24 @@ class FansubCMS_Controller_Dispatcher_Standard extends Zend_Controller_Dispatche
         if(!Zend_Registry::isRegistered("settings")) {
             return false;
         }
-        
+
         $this->_settings = Zend_Registry::get("settings");
 
         // set to locale
         $moduleName = $request->getModuleName();
-        $controllerName = $request->getControllerName();        
-                
+        $controllerName = $request->getControllerName();
+
         // is this request administrative?
         if($moduleName == 'admin' || $controllerName == 'admin') {
             $this->_isAdminRequest = true;
         } else {
             $this->_isAdminRequest = false;
         }
-        
+
         // start handling the request
         $this->_handleView($moduleName, $controllerName);
     }
-    
+
     /**
      * handle view version paths - based on request
      *
@@ -103,12 +103,12 @@ class FansubCMS_Controller_Dispatcher_Standard extends Zend_Controller_Dispatche
     {
         // Determine which layout to use
         if($this->isAdminRequest()) {
-            $layout = empty($this->_settings->page->adminLayout) ? 
+            $layout = empty($this->_settings->page->adminLayout) ?
                 $this->_settings->page->layout : $this->_settings->page->adminLayout;
         } else {
             $layout = $this->_settings->page->layout;
         }
-        
+
         // check if layout is available
         $layoutPath = APPLICATION_PATH . DIRECTORY_SEPARATOR . 'layouts' . DIRECTORY_SEPARATOR . $layout;
         $layoutFile = $this->isAdminRequest() ? 'admin.phtml' : 'frontend.phtml';
@@ -122,69 +122,69 @@ class FansubCMS_Controller_Dispatcher_Standard extends Zend_Controller_Dispatche
         $layoutInstance->assign('language', $this->_settings->locale);
         $layoutInstance->assign('group', $this->_settings->page->group->name);
         $layoutInstance->assign('group_short', $this->_settings->page->group->short);
-        
+
         // get view and renderer
         $view = Zend_Layout::getMvcInstance()->getView();
         $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper("ViewRenderer");
-        
+
         // set some default view values
         $view->doctype('XHTML1_TRANSITIONAL');
         $view->headMeta()->appendHttpEquiv(
                 'Content-Type', 'text/html;charset=utf-8'
         );
         $view->setEncoding('UTF-8');
-        
+
         // set view paths
         $viewRenderer->setView($view);
-        
+
         $view->addScriptPath(APPLICATION_PATH .
                 DIRECTORY_SEPARATOR . "modules" .
                 DIRECTORY_SEPARATOR . 'gadgets' .
                 DIRECTORY_SEPARATOR . "views" .
-                DIRECTORY_SEPARATOR . 'default' . 
+                DIRECTORY_SEPARATOR . 'default' .
                 DIRECTORY_SEPARATOR . 'scripts');
-        
+
         $view->addScriptPath(APPLICATION_PATH .
                 DIRECTORY_SEPARATOR . "modules" .
                 DIRECTORY_SEPARATOR . 'gadgets' .
                 DIRECTORY_SEPARATOR . "views" .
-                DIRECTORY_SEPARATOR . $layout . 
+                DIRECTORY_SEPARATOR . $layout .
                 DIRECTORY_SEPARATOR . 'scripts');
-        
+
         $view->addScriptPath(APPLICATION_PATH .
                 DIRECTORY_SEPARATOR . "modules" .
                 DIRECTORY_SEPARATOR . 'cms' .
                 DIRECTORY_SEPARATOR . "views" .
-                DIRECTORY_SEPARATOR . 'default' . 
+                DIRECTORY_SEPARATOR . 'default' .
                 DIRECTORY_SEPARATOR . 'scripts');
-        
+
         $cmsViewDir = APPLICATION_PATH .
                 DIRECTORY_SEPARATOR . "modules" .
                 DIRECTORY_SEPARATOR . 'cms' .
                 DIRECTORY_SEPARATOR . "views" .
-                DIRECTORY_SEPARATOR . $layout . 
+                DIRECTORY_SEPARATOR . $layout .
                 DIRECTORY_SEPARATOR . 'scripts';
         if(is_readable($cmsViewDir)) {
             $view->addScriptPath($cmsViewDir);
         }
-        
+
         $view->addScriptPath(APPLICATION_PATH .
                 DIRECTORY_SEPARATOR . "modules" .
                 DIRECTORY_SEPARATOR . $module .
                 DIRECTORY_SEPARATOR . "views" .
-                DIRECTORY_SEPARATOR . 'default' . 
+                DIRECTORY_SEPARATOR . 'default' .
                 DIRECTORY_SEPARATOR . 'scripts');
-        
+
         $moduleViewDir = APPLICATION_PATH .
                 DIRECTORY_SEPARATOR . "modules" .
                 DIRECTORY_SEPARATOR . $module .
                 DIRECTORY_SEPARATOR . "views" .
-                DIRECTORY_SEPARATOR . $layout . 
+                DIRECTORY_SEPARATOR . $layout .
                 DIRECTORY_SEPARATOR . 'scripts';
         if(is_readable($moduleViewDir)) {
             $view->addScriptPath($moduleViewDir);
         }
-        
+
         $resourceViewDir = APPLICATION_PATH .
                 DIRECTORY_SEPARATOR . "resource" .
                 DIRECTORY_SEPARATOR . 'templates' .
@@ -193,20 +193,20 @@ class FansubCMS_Controller_Dispatcher_Standard extends Zend_Controller_Dispatche
         if(is_readable($resourceViewDir)) {
             $view->addScriptPath($resourceViewDir);
         }
-        
-        
+
+
         // set path to default view helpers
         $view->addHelperPath(APPLICATION_PATH .
                 DIRECTORY_SEPARATOR . "layouts" .
                 DIRECTORY_SEPARATOR . 'default' .
                 DIRECTORY_SEPARATOR . 'helpers', (!empty($this->_settings->view->helperNamespace) ? $this->_settings->view->helperNamespace : "Zend_View_Helper"));
-        
+
         // set path to versioned layout view helpers
         $view->addHelperPath(APPLICATION_PATH .
                 DIRECTORY_SEPARATOR . "layouts" .
                 DIRECTORY_SEPARATOR . $layout .
                 DIRECTORY_SEPARATOR . 'helpers', (!empty($this->_settings->view->helperNamespace) ? $this->_settings->view->helperNamespace : "Zend_View_Helper"));
-        
+
         // set path to module view helpers
         $view->addHelperPath(APPLICATION_PATH .
                 DIRECTORY_SEPARATOR . "modules" .
@@ -221,12 +221,12 @@ class FansubCMS_Controller_Dispatcher_Standard extends Zend_Controller_Dispatche
                 DIRECTORY_SEPARATOR . "views" .
                 DIRECTORY_SEPARATOR . $layout .
                 DIRECTORY_SEPARATOR . "helpers";
-        $view->addHelperPath($layoutModuleViewHelper, (!empty($this->_settings->view->helperNamespace) ? $this->_settings->view->helperNamespace : "Zend_View_Helper"));      
-        
+        $view->addHelperPath($layoutModuleViewHelper, (!empty($this->_settings->view->helperNamespace) ? $this->_settings->view->helperNamespace : "Zend_View_Helper"));
+
     }
-    
+
     // helper methods
-    
+
     public function isAdminRequest()
     {
         return $this->_isAdminRequest;

@@ -8,8 +8,8 @@ if (! $this->data->generate) {
         }
     }
     ?>
-		
-		<?
+
+    <?
     if ($hasChanges) :
         ?>
 <div style="font-weight: bold;">There are changed YAML model
@@ -23,10 +23,10 @@ migration classes</a>
 <br />
 <br />
 <br />
-<?php 
+<?php
      else :
         ?>
-			There are changed YAML model definitions.
+      There are changed YAML model definitions.
 <br />
 
     <? endif;
@@ -61,15 +61,15 @@ migration classes</a>
     }
     ?>
 <div
-	style="padding: 10px; border: 1px solid black; background-color: #CCCCCC;">
-				<?
+  style="padding: 10px; border: 1px solid black; background-color: #CCCCCC;">
+        <?
     dumpArrayRecursive($this->data->changes);
     ?>
-			</div>
+      </div>
 <?
 } else {
     ?>
-			Migration classes were generated.
+      Migration classes were generated.
 <br />
 <br />
 <a href="/devtools/doctrine/migration">Proceed with migration</a>

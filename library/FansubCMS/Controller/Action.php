@@ -40,7 +40,7 @@ class FansubCMS_Controller_Action extends Zend_Controller_Action
     public $session;
     /**
      *
-     * @var Zend_Controller_Request_Abstract
+     * @var Zend_Controller_Request_Http
      */
     public $request;
     /**
@@ -73,9 +73,9 @@ class FansubCMS_Controller_Action extends Zend_Controller_Action
         $this->request = $request;
         $this->session = Zend_Registry::get('applicationSessionNamespace');
         $this->session->tableActions = array();
-        $this->acl = Zend_Registry::get('Zend_Acl');        
+        $this->acl = Zend_Registry::get('Zend_Acl');
         $envSettings = Zend_Registry::get('environmentSettings');
-        
+
         if(!empty($this->session->message)) {
             $this->view->message = $this->session->message;
             $this->view->message_type = $this->session->message_type;
@@ -85,10 +85,10 @@ class FansubCMS_Controller_Action extends Zend_Controller_Action
 
         $this->session->markitup = '';
     }
-    
+
     /**
      * Checks if user has the right to do privilege on resource
-     * 
+     *
      * @param Zend_Acl_Resource $resource
      * @param string $privilege
      * @return boolean
@@ -98,15 +98,15 @@ class FansubCMS_Controller_Action extends Zend_Controller_Action
         if(!$this->acl->has($resource)) {
             return true;
         }
-        
+
         return $this->acl->isAllowed('fansubcms_user_custom_role_logged_in_user', $resource, $privilege);
     }
-    
+
     /**
      * Checks if the user is allowd to do something and throws exception if not
-     * 
+     *
      * @param Zend_Acl_Resource $resource
-     * @param string $privilege 
+     * @param string $privilege
      * @throws FansubCMS_Exception_Denied
      */
     public function checkAllowed($resource, $privilege)
@@ -115,7 +115,7 @@ class FansubCMS_Controller_Action extends Zend_Controller_Action
             throw new FansubCMS_Exception_Denied('The user is not allowed to do this');
         }
     }
-    
+
     /**
      * translates the given key
      * @param string $key
@@ -126,24 +126,24 @@ class FansubCMS_Controller_Action extends Zend_Controller_Action
     {
         return $this->view->translate($key,$params);
     }
-    
+
     /**
-     * 
+     *
      * Add a delegate to the controller/action
      * @param string $name The name of the delegate
      */
-    protected function _addDelegateType($name) 
+    protected function _addDelegateType($name)
     {
         $this->_delegateHelper->addDelegateType($name);
     }
     /**
-     * 
+     *
      * Invoke a delegate
      * @param string $name
      * @param string $method
      * @param array $args
      */
-    protected function invokeDelegate($name, $method, $args) 
+    protected function invokeDelegate($name, $method, $args)
     {
         return $this->_delegateHelper->invokeDelegate($name, $method, $args);
     }

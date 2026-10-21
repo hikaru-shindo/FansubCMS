@@ -19,13 +19,14 @@
 
 class News_CommentController extends FansubCMS_Controller_Action {
 
+    public $conf;
+
     public function init() {
         parent::init();
         $this->conf = Zend_Registry::get('environmentSettings');
     }
 
     public function indexAction() {
-        $envConf = Zend_Registry::get('environmentSettings');
         $req = $this->getRequest();
         $id = $req->getParam('id');
         $title = $req->getParam('title');

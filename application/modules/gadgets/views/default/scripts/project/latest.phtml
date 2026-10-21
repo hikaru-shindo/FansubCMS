@@ -1,7 +1,7 @@
 <?php if (count($this->latest)): ?>
 <ul>
     <?php foreach ($this->latest as $ep): ?>
-        <li>            
+        <li>
             <?= $this->formatDate($ep['released_at'], "shortdate") ?> - <a
                 href="<?= $this->baseUrl() ?>/projects/index/details/project/<?=$ep['project_slug']?>"><?= $ep['project'] ?> <?= $ep['number'] ?><?= $ep['version'] > 1 ? 'v'.$ep['version'] : ''?> (<?= $ep['vcodec'] ?>)</a>
         </li>

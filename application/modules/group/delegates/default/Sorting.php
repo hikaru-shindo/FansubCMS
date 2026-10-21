@@ -17,12 +17,20 @@
  */
 class Group_Delegate_Default_Sorting
 {
+    /**
+     * The HTTP request
+     *
+     * @var Zend_Controller_Request_Http
+     */
+    public $request;
+    public $settings;
+
     public function __construct($settings, $request)
     {
         $this->request = $request;
         $this->settings = $settings;
     }
-    
+
     public function sortTeam($team)
     {
         $active = array();

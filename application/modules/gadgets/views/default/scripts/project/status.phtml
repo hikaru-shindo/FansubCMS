@@ -20,7 +20,7 @@ if(count($this->result)):
            alt="<?=$task['Projects_Model_TaskType']['Projects_Model_Project']['name']?>">
             <?=$task['Projects_Model_TaskType']['Projects_Model_Project']['name']?>
         </a>
-        <?=$task[$ptype]['number'] . $vadd?> - 
+        <?=$task[$ptype]['number'] . $vadd?> -
         <?=$task['Projects_Model_TaskType']['title']?> - <?=$task['done']?>%
     </li>
 <?php endforeach; ?>

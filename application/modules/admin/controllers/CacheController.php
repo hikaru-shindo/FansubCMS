@@ -16,15 +16,15 @@
  *  along with FansubCMS.  If not, see <http://www.gnu.org/licenses/>
  */
 
-class Admin_CacheController extends FansubCMS_Controller_Action 
+class Admin_CacheController extends FansubCMS_Controller_Action
 {
-    public function flushAction() 
+    public function flushAction()
     {
         $caches = $this->_cacheHelper->getCaches();
         foreach($caches as $cache) {
             $cache->clean(Zend_Cache::CLEANING_MODE_ALL);
         }
-         
+
         return  $this->_helper->redirector->gotoRoute(array('action'=>'index','controller'=>'index','module'=>'admin'),'default');
     }
 }

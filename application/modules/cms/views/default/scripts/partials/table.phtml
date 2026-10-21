@@ -5,10 +5,10 @@ $id = 'table-' . md5(mt_rand() . mt_rand() . mt_rand());
 ?>
 <?php if(count($this->paginator)): ?>
 <script type="text/javascript">
-$(document).ready(function() { 
-    // call the tablesorter plugin, the magic happens in the markup 
-    $("#<?php echo $id ?>").tablesorter(); 
-}); 
+$(document).ready(function() {
+    // call the tablesorter plugin, the magic happens in the markup
+    $("#<?php echo $id ?>").tablesorter();
+});
 </script>
 <table class="admin-table tablesorter" id="<?php echo $id ?>">
     <thead>
@@ -74,7 +74,7 @@ $(document).ready(function() {
                 <?php endforeach; ?>
                                                 </td>
             <?php endif; ?>
-                                                </tr>                                        
+                                                </tr>
         <?php endforeach; ?>
                                                 </tbody>
                                             </table>
@@ -86,7 +86,7 @@ $(document).ready(function() {
 ?>
 <?php else: ?>
 <div class="no-records-message">
-<?php echo empty($this->options['emptyListMessage']) ? $this->translate('no_records') : $this->translate($this->options['emptyListMessage']) ?> 
+<?php echo empty($this->options['emptyListMessage']) ? $this->translate('no_records') : $this->translate($this->options['emptyListMessage']) ?>
 </div>
 <?php endif; ?>
 <?php if (count($this->options['footerActions'])): ?>
@@ -105,7 +105,7 @@ $(document).ready(function() {
                                                                         $url[$k] = $v;
                                                                     }
                                                                 }
-    ?>                                                       
+    ?>
                                                                 <a href="<?php echo $this->url($url, null, true) ?>"><img src="<?php echo $this->baseUrl($action['image']) ?>" alt=""/> <?php echo $this->escape($this->translate($action['label'])) ?></a>
     <?php endif; ?>
     <?php endforeach; ?>

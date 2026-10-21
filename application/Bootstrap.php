@@ -89,19 +89,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     }
 
     /**
-     * strip the slashes for request and cookie superglobals. We'll escape ourselves if needed
-     */
-    protected function _initSuperglobals()
-    {
-        if (get_magic_quotes_gpc()) {
-            $this->_arrayStripslashes($_GET);
-            $this->_arrayStripslashes($_POST);
-            $this->_arrayStripslashes($_REQUEST);
-            $this->_arrayStripslashes($_COOKIE);
-        }
-    }
-
-    /**
      * init configuration
      * @return void
      */
@@ -115,7 +102,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $this->mailsettings = new Zend_Config_Ini(APPLICATION_PATH . "/configs/email.ini", "email");
         $this->databasesettings = new Zend_Config_Ini(APPLICATION_PATH . "/configs/database.ini", "database");
         $this->environmentsettings = new Zend_Config_Ini(APPLICATION_PATH . "/configs/environment.ini", "environment");
-        
+
         # merge settings in main settings obj
         $this->settings->merge($this->mailsettings);
         $this->settings->merge($this->databasesettings);
@@ -133,7 +120,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         } else {
             $dbDefaultDsn = $this->settings->db->dsn;
         }
-        
+
         $conn = Doctrine_Manager::connection($dbDefaultDsn, $this->settings->db->database, "defaultConnection");
         $conn->execute("SET NAMES 'UTF8'");
         $conn->setAttribute(Doctrine::ATTR_USE_NATIVE_ENUM, true);
@@ -166,15 +153,15 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
         # now add our own dispatcher
         $this->frontController->setDispatcher(new FansubCMS_Controller_Dispatcher_Standard());
-        
+
         # prefix default module as well
         $this->frontController->setParam('prefixDefaultModule', true);
-        
+
         # set default and module controller directrories
         //  $this->frontController->setControllerDirectory($this->settings->controllers->toArray());
         $this->frontController->addModuleDirectory(APPLICATION_PATH . "/modules");
         $this->frontController->removeControllerDirectory('default');
-        
+
         # set default module
         $this->frontController->setDefaultModule("news");
 
@@ -196,14 +183,14 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
         # hook to settings
         $this->settings->applicationStatus = $this->applicationStatus;
-        
+
         # hook needed objects/values to the zend registry
         Zend_Registry::set('settings', $this->settings);
         Zend_Registry::set('applicationStatus', $this->applicationStatus);
         Zend_Registry::set('environmentSettings', $this->environmentsettings);
         Zend_Registry::set('emailSettings', $this->mailsettings);
     }
-   
+
     /**
      * init router
      * @return void
@@ -215,7 +202,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             $router->addConfig($this->routes->router, 'routes');
         }
     }
-    
+
     /**
      * init cache manager
      * @return Zend_Cache_Manager
@@ -242,7 +229,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $trans = new Zend_Translate('Array',array(''=>''), $this->settings->locale);
 
         # the translations itself will be added in module bootstraps
-        
+
         // save the translation in the registry
         Zend_Registry::set('Zend_Locale', $locale);
         Zend_Registry::set('Zend_Translate', $trans);
@@ -255,15 +242,13 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     protected function _initPlugins()
     {
         # only embed the debugging plugin if application status is development or testing
-        if ($this->applicationStatus == "development") {
+        if ($this->applicationStatus == "development" && class_exists("ZFDebug_Controller_Plugin_Debug")) {
             # embed the ZFDebug Plugin/console
             $debug = new ZFDebug_Controller_Plugin_Debug(array(
                         'jquery_path' => '',
                         'plugins' => array(
                             'Variables',
                             'File' => array('basePath' => APPLICATION_PATH),
-                            'Memory',
-                            'Time',
                             'Html',
                             'Exception'
                         )
@@ -275,15 +260,15 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $errorhandler = new Zend_Controller_Plugin_ErrorHandler();
         $errorhandler->setErrorHandler(array('module' => 'cms', 'controller' => 'error', 'action' => 'error'));
         $this->frontController->registerPlugin($errorhandler);
-        
+
         # gadget plugin
         $gadgetPlugin = new FansubCMS_Controller_Plugin_Gadget();
         $this->frontController->registerPlugin($gadgetPlugin);
-        
+
         # not-logged-in-so-go-to-login plugin
         $aclPlugin = new FansubCMS_Controller_Plugin_Acl(Zend_Auth::getInstance()->setStorage(new FansubCMS_Auth_Storage_DoctrineSession));
         $this->frontController->registerPlugin($aclPlugin);
-        
+
         # check if install or update is needed
         $installPlugin = new FansubCMS_Controller_Plugin_InstallCheck();
         $this->frontController->registerPlugin($installPlugin);
@@ -291,27 +276,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         # the navigation plugin
         $navPlugin = new FansubCMS_Controller_Plugin_Navigation();
         $this->frontController->registerPlugin($navPlugin);
-    }
-
-    /*
-     * Helpers
-     */
-
-    /**
-     * stripslashes() for arrays
-     * @param array $var
-     */
-    protected function _arrayStripslashes(&$var)
-    {
-        if (is_string($var)) {
-            $var = stripslashes($var);
-        } else {
-            if (is_array($var)) {
-                foreach ($var AS $key => $value) {
-                    $this->_arrayStripslashes($var[$key]);
-                }
-            }
-        }
     }
 
 }

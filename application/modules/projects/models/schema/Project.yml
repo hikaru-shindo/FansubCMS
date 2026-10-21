@@ -121,7 +121,7 @@ Projects_Model_Leader:
         type: InnoDB
         collate: utf8_unicode_ci
         charset: utf8
-        
+
 Projects_Model_TaskType:
     tableName: project_task_types
     columns:
@@ -242,7 +242,7 @@ Projects_Model_Screenshot:
        type: InnoDB
        collate: utf8_unicode_ci
        charset: utf8
-       
+
 Projects_Model_Episode:
     tableName: project_episodes
     actAs: [Timestampable]
@@ -284,7 +284,7 @@ Projects_Model_Episode:
        type: InnoDB
        collate: utf8_unicode_ci
        charset: utf8
-       
+
 Projects_Model_EpisodeRelease:
     tableName: project_episode_releases
     actAs: [Timestampable]
@@ -333,7 +333,7 @@ Projects_Model_EpisodeRelease:
        type: InnoDB
        collate: utf8_unicode_ci
        charset: utf8
-            
+
 Projects_Model_Chapter:
     tableName: project_chapters
     actAs: [Timestampable]
@@ -372,7 +372,7 @@ Projects_Model_Chapter:
        type: InnoDB
        collate: utf8_unicode_ci
        charset: utf8
-       
+
 Projects_Model_ChapterRelease:
     tableName: project_chapter_releases
     actAs: [Timestampable]

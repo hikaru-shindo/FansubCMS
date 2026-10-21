@@ -17,6 +17,8 @@
 */
 
 class News_IndexController extends FansubCMS_Controller_Action {
+    public $conf;
+
     public function init() {
         parent::init();
         $this->conf = Zend_Registry::get('environmentSettings');
