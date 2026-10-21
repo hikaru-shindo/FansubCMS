@@ -44,7 +44,7 @@ class Projects_Form_EditProjectScreenshot extends Zend_Form {
                     ->addFilter('stripTags')
                     ->setLabel('project_admin_field_screenshot_description')
                     ->setValue(isset($values['description']) ? $values['description'] : null);
-                    
+
         # projects
         $table = Doctrine::getTable('Projects_Model_Project');
         $project = $this->createElement('select', 'project')

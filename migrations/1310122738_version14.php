@@ -7,11 +7,11 @@ class Version14 extends Doctrine_Migration_Base
     public function preUp()
     {
         parent::preUp();
-        
+
         // get a mapping of current ids for later use
         $conn = Doctrine_Manager::getInstance()->connection();
         $episodes = $conn->execute('SELECT * FROM project_episodes')->fetchAll();
-        
+
         $mapping = array();
         $afterDelete = array();
         foreach($episodes as $episode) {
@@ -21,9 +21,9 @@ class Version14 extends Doctrine_Migration_Base
                 $afterDelete[] = $episode['id'];
             }
         }
-        
+
         foreach($episodes as $episode) {
-            
+
             $rel = new Projects_Model_EpisodeRelease();
 
             $rel->vcodec = $episode['vcodec'];
@@ -37,13 +37,13 @@ class Version14 extends Doctrine_Migration_Base
             $rel->episode_id = $mapping[$episode['project_id'] . '-' .$episode['number'] . '-' . $episode['version']];
 
             $rel->save();
-            
+
             $rel->free();
         }
-        
+
         Doctrine_Query::create()->delete('Projects_Model_Episode')->whereIn('id', $afterDelete)->execute();
     }
-    
+
     public function up()
     {
         $this->removeColumn('project_chapters', 'format');

@@ -18,22 +18,22 @@
 class Gadgets_DynamicController extends FansubCMS_Controller_Action
 {
     public function menuAction ()
-    {       
+    {
         $links = $this->request->getParam('links', array());
-        
+
         foreach($links as $key => $link) {
             $url = '';
             if(isset($link['intern']) && $link['intern']) {
                 $url = $this->view->baseUrl();
             }
-            
+
             $url .= $link['url'];
-                       
+
             $links[$key]['url'] = $url;
-            
+
             $links[$key]['label'] = $this->translate($link['label']);
-        }      
-        
+        }
+
         $this->view->links = $links;
     }
 }

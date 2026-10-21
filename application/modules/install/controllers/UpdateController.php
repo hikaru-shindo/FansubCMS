@@ -55,9 +55,9 @@ class Install_UpdateController extends FansubCMS_Controller_Action
                     }
                     $this->view->additional = $msg;
                     $this->view->error = $this->translate('install_migrate_error_in_dry_run');
-                    
+
                 }
-                
+
             } else {
                 $this->_helper->redirector->gotoSimple('index','index','install');
             }
@@ -81,7 +81,7 @@ class Install_UpdateController extends FansubCMS_Controller_Action
                     if(!headers_sent()) {
                         header('Content-Type: text/plain');
                     }
-                    
+
                     echo "The migration has failed. Please provide the info below if filing in a bug report.\n\n";
                     echo "Error information:\n";
                     echo $e->getMessage() . "(Code " . $e->getCode() . ")\n";
@@ -92,7 +92,7 @@ class Install_UpdateController extends FansubCMS_Controller_Action
                     echo "Extended Trace:\n";
                     print_r($e->getTrace());
                     die();
-                } 
+                }
                 if($success) {
                    $this->_helper->redirector->gotoSimple('index','index','install');
                 } else {

@@ -14,10 +14,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with FansubCMS.  If not, see <http://www.gnu.org/licenses/>
- *  
+ *
  */
 /**
- * 
+ *
  * This class is the api to install the cms
  * @author Hikaru-Shindo <hikaru@fansubcode.org>
  *
@@ -27,42 +27,42 @@ class Install_Api_DoctrineTool
     /*
      * class properties
      */
-    
+
     /**
-     * 
+     *
      * This is the temporary path to do all actions in
      * @var string
      */
     protected $_tmpPath;
-    
+
     /**
-     * 
+     *
      * This is the path where the modules reside
      * @var string
      */
     protected $_modulePath;
-    
+
     /**
-     * 
+     *
      * Doctrine Migration
      * @var Doctrine_Migration
      */
     protected $_migration;
-    
+
     /**
-     * 
+     *
      * Instance of this api
      * @var Install_Api_DoctrineTool
      */
     protected static $_instance;
-       
+
     /*
      * magic methods
      */
 
     /**
      * The class constructor
-     * 
+     *
      * @return void
      */
     protected function __construct ()
@@ -71,23 +71,23 @@ class Install_Api_DoctrineTool
         mkdir($this->getFromPath());
         mkdir($this->getToPath());
     }
-    
+
     /**
      * The classes destructor
-     * 
+     *
      * @return void
      */
     public function __destruct ()
     {
         $this->_rrmdir($this->getTempPath());
     }
-    
+
     /*
      * main methods
      */
-       
+
     /**
-     * 
+     *
      * Get an instance of the API
      * @return Install_Api_DoctrineTool
      */
@@ -98,9 +98,9 @@ class Install_Api_DoctrineTool
         }
         return self::$_instance;
     }
-    
+
         /**
-     * 
+     *
      * Returns the temporary path
      * @return string
      */
@@ -113,7 +113,7 @@ class Install_Api_DoctrineTool
         return $this->_tmpPath;
     }
     /**
-     * 
+     *
      * Returns the from-path
      * @return string
      */
@@ -122,7 +122,7 @@ class Install_Api_DoctrineTool
         return $this->getTempPath() . DIRECTORY_SEPARATOR . 'from';
     }
     /**
-     * 
+     *
      * Returns the to-path
      * @return string
      */
@@ -130,9 +130,9 @@ class Install_Api_DoctrineTool
     {
         return $this->getTempPath() . DIRECTORY_SEPARATOR . 'to';
     }
-    
+
     /**
-     * 
+     *
      * Set the path where the modules reside
      * @param string $path
      * @return void
@@ -141,9 +141,9 @@ class Install_Api_DoctrineTool
     {
         $this->_modulePath = $path;
     }
-    
+
     /**
-     * 
+     *
      * Returns the module path
      * @return string
      */
@@ -155,9 +155,9 @@ class Install_Api_DoctrineTool
         }
         return $this->_modulePath;
     }
-   
+
     /**
-     * 
+     *
      * Initialize the database
      * @return void
      */
@@ -166,9 +166,9 @@ class Install_Api_DoctrineTool
         $models = $this->_getModels();
         Doctrine::createTablesFromArray($models);
     }
-    
+
     /**
-     * 
+     *
      * Get the path where the migrations reside
      * @return string
      */
@@ -176,24 +176,24 @@ class Install_Api_DoctrineTool
     {
         return realpath(APPLICATION_PATH . DIRECTORY_SEPARATOR . '..') . DIRECTORY_SEPARATOR . 'migrations';
     }
-    
+
     /**
-     * 
+     *
      * Get the migration object
      * @return Doctrine_Migration
      */
     public function getMigration()
     {
         if(empty($this->_migration)) {
-            $this->_migration = new Doctrine_Migration($this->getMigrationPath());    
+            $this->_migration = new Doctrine_Migration($this->getMigrationPath());
         }
-        
+
         return $this->_migration;
     }
-    
+
     /**
      * Sets the migration version to $version
-     * 
+     *
      * @param integer $version
      * @return void
      */
@@ -201,21 +201,21 @@ class Install_Api_DoctrineTool
     {
         $this->getMigration()->setCurrentVersion($version);
     }
-    
+
     /**
      * Sets the migration version to latest available. Bassically a wrapper for setMigrationVersion()
-     * 
+     *
      * @return void
      */
     public function setMigrationVersionToCurrent()
     {
         $this->setMigrationVersion($this->getMigration()->getLatestVersion());
     }
-    
-    
+
+
     /**
      * Export fixture files to $path
-     * 
+     *
      * @param string $path
      * @return void
      */
@@ -224,11 +224,11 @@ class Install_Api_DoctrineTool
         $this->_loadDoctrineModels();
         Doctrine::dumpData($path, true);
     }
-    
+
     /**
-     * Import fixtures from $path. If $append is true the database will not be purged 
+     * Import fixtures from $path. If $append is true the database will not be purged
      * before importing.
-     * 
+     *
      * @param string $path
      * @param boolean $append
      * @return void
@@ -240,7 +240,7 @@ class Install_Api_DoctrineTool
     }
 
     /**
-     * 
+     *
      * Generate the models to the module folder
      * @return void
      */
@@ -249,38 +249,38 @@ class Install_Api_DoctrineTool
         $this->_getSchema($this->getFromPath());
         $this->_generateModels($this->getFromPath(), $this->getToPath());
         $models = glob($this->getToPath() . DIRECTORY_SEPARATOR . '*.php');
-        
+
         foreach ($models as $model) {
-            $filename = str_replace($this->getToPath() . DIRECTORY_SEPARATOR, 
+            $filename = str_replace($this->getToPath() . DIRECTORY_SEPARATOR,
             '', $model);
             $filenameParts = explode('_', $filename);
-            
+
             $module = strtolower($filenameParts[0]);
             $modelDir = $this->getModulePath() . DIRECTORY_SEPARATOR . $module .
              DIRECTORY_SEPARATOR . 'models';
-             
+
             if (! is_dir($modelDir)) {
                 mkdir($modelDir);
             }
-            
+
             if (! is_dir($modelDir . DIRECTORY_SEPARATOR . 'Base')) {
                 mkdir($modelDir . DIRECTORY_SEPARATOR . 'Base');
             }
-            
+
             if (! file_exists(
             $modelDir . DIRECTORY_SEPARATOR . $filenameParts[2])) {
-                copy($model, 
+                copy($model,
                 $modelDir . DIRECTORY_SEPARATOR . $filenameParts[2]);
             }
-            
+
             unlink($model);
         }
-        
+
         $baseModels = glob(
         $this->getToPath() . DIRECTORY_SEPARATOR . 'Base' . DIRECTORY_SEPARATOR .
          '*.php');
         foreach ($baseModels as $model) {
-            $filename = str_replace($this->getToPath() . DIRECTORY_SEPARATOR . 'Base' . DIRECTORY_SEPARATOR, 
+            $filename = str_replace($this->getToPath() . DIRECTORY_SEPARATOR . 'Base' . DIRECTORY_SEPARATOR,
             '', $model);
             $filenameParts = explode('_', $filename);
             $module = strtolower($filenameParts[0]);
@@ -302,10 +302,10 @@ class Install_Api_DoctrineTool
             }
         }
     }
-    
+
     /**
      * Generates the migration classes
-     * 
+     *
      * @param boolean $changesOnly
      * @return array
      */
@@ -322,10 +322,10 @@ class Install_Api_DoctrineTool
         if(!$changesOnly && $dm->getAttribute(Doctrine_Core::ATTR_SEQNAME_FORMAT) != '%s_seq') {
             throw new Exception("You can not create migrations from diff with a custom Doctrine attribute 'ATTR_SEQNAME_FORMAT'");
         }
-        
+
         $this->_getModels($this->getFromPath());
         $this->_getSchema($this->getToPath());
-        
+
         $changes = new Doctrine_Migration_Diff($this->getFromPath(), $this->getToPath(), $this->getMigrationPath());
 
         if($changesOnly) {
@@ -334,20 +334,20 @@ class Install_Api_DoctrineTool
             return $changes->generateMigrationClasses();
         }
     }
-    
+
     /*
      * Helpers
      */
-    
+
     /**
      * Let doctrine load its models
-     * 
+     *
      * @return void
      */
     protected function _loadDoctrineModels()
     {
         $models = $this->_getModels();
-        
+
         foreach($models as $model) {
             $cleanModel = str_replace($this->getModulePath() . DIRECTORY_SEPARATOR, '', $model);
             $cleanModel = str_replace('.php', '', $cleanModel);
@@ -363,10 +363,10 @@ class Install_Api_DoctrineTool
             }
         }
     }
-    
+
     /**
      * Get the schema files and save them to $path
-     * 
+     *
      * @param string $path
      * @return void
      */
@@ -380,15 +380,15 @@ class Install_Api_DoctrineTool
         foreach ($schema as $yml) {
             $filename =  explode(
             DIRECTORY_SEPARATOR . 'models' . DIRECTORY_SEPARATOR . 'schema' .
-             DIRECTORY_SEPARATOR, 
-            str_replace($this->getModulePath() . DIRECTORY_SEPARATOR, '', $yml));  
+             DIRECTORY_SEPARATOR,
+            str_replace($this->getModulePath() . DIRECTORY_SEPARATOR, '', $yml));
             copy($yml, $path . DIRECTORY_SEPARATOR . implode('_',$filename));
         }
     }
-    
+
     /**
      * Copies all models to $path, returns a list of models if path is empty
-     * 
+     *
      * @param string $path
      * @return void|array
      */
@@ -418,14 +418,14 @@ class Install_Api_DoctrineTool
 
             return $classNames;
         }
-        
+
         $models = glob($this->getModulePath() . DIRECTORY_SEPARATOR . '*' . DIRECTORY_SEPARATOR .
         'models' . DIRECTORY_SEPARATOR . '*.php');
         $baseModels = glob($this->getModulePath() . DIRECTORY_SEPARATOR . '*' . DIRECTORY_SEPARATOR .
         'models' . DIRECTORY_SEPARATOR . 'Base' . DIRECTORY_SEPARATOR . '*.php');
-        
+
         $models = array_merge($models, $baseModels);
-        
+
         foreach($models as $model) {
             $filename = str_replace($this->getModulePath() . DIRECTORY_SEPARATOR, '', $model);
             $filenameParts = explode(DIRECTORY_SEPARATOR, $filename);
@@ -434,17 +434,17 @@ class Install_Api_DoctrineTool
             array_shift($filenameParts); // 'models'
 
             $filename = '';
-                        
+
             $filename .= ucfirst($module) . '_Model_';
-            
+
             $filename .= implode('_', $filenameParts);
             copy($model, $path . DIRECTORY_SEPARATOR . $filename);
         }
     }
-    
+
     /**
      * Generate models from $yaml to $path
-     * 
+     *
      * @param string $yaml
      * @param string $path
      * @param array $options
@@ -454,22 +454,22 @@ class Install_Api_DoctrineTool
     {
         if (! count($options)) {
             $options = array(
-            'baseClassName' => 'FansubCMS_Doctrine_Record', 
-            'suffix' => '.php', 'baseClassesDirectory' => 'Base', 
-            'baseClassPrefix' => '', 'generateTableClasses' => true, 
-            'generateBaseClasses' => true, 'phpDocPackage' => 'FansubCMS', 
-            'phpDocSubpackage' => 'Models', 'phpDocName' => 'FansubCMS Dev Team', 
+            'baseClassName' => 'FansubCMS_Doctrine_Record',
+            'suffix' => '.php', 'baseClassesDirectory' => 'Base',
+            'baseClassPrefix' => '', 'generateTableClasses' => true,
+            'generateBaseClasses' => true, 'phpDocPackage' => 'FansubCMS',
+            'phpDocSubpackage' => 'Models', 'phpDocName' => 'FansubCMS Dev Team',
             'phpDocEmail' => 'hikaru@fansubcode.org');
         }
-        
+
         if(!empty($classPrefix)) {
             $options['classPrefix'] = $classPrefix;
         }
-        
+
        // Doctrine::generateModelsFromYaml($yaml, $path, $options);
         $this->_importSchema($yaml, 'yml', $path, $options);
     }
-    
+
     /**
      * importSchema
      *
@@ -488,23 +488,23 @@ class Install_Api_DoctrineTool
         $builder = new Install_Api_DoctrineBuilder();
         $builder->setTargetPath($directory);
         $builder->setOptions($options);
-        
+
         $importer = new Doctrine_Import_Schema();
         $array = $importer->buildSchema($schema, $format);
 
-        if (count($array) == 0) { 
+        if (count($array) == 0) {
             throw new Doctrine_Import_Exception(
                 sprintf('No ' . $format . ' schema found in ' . implode(", ", $schema))
-            ); 
+            );
         }
-        foreach ($array as $name => $definition) {           
+        foreach ($array as $name => $definition) {
             $builder->buildRecord($definition);
         }
     }
-    
+
     /**
      * Removes a directory recursivly
-     * 
+     *
      * @param string $dir
      * @return void
      */
@@ -515,13 +515,13 @@ class Install_Api_DoctrineTool
             foreach ($objects as $object) {
                 if ($object != "." && $object != "..") {
                     if (filetype($dir . "/" . $object) == "dir") {
-                        $this->_rrmdir($dir . "/" . $object); 
+                        $this->_rrmdir($dir . "/" . $object);
                     } else {
                         unlink($dir . "/" . $object);
                     }
                 }
             }
-            
+
             reset($objects);
             rmdir($dir);
         }

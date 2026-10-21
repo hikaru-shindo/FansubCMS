@@ -28,7 +28,7 @@ class FansubCMS_Application_Module_Bootstrap extends Zend_Application_Module_Boo
     public $moduleSettings;
     public $envSettings;
     public $path;
-    
+
     protected function _initModule ()
     {
         $this->path = APPLICATION_PATH . DIRECTORY_SEPARATOR . "modules" . DIRECTORY_SEPARATOR . strtolower($this->getModuleName());
@@ -43,22 +43,22 @@ class FansubCMS_Application_Module_Bootstrap extends Zend_Application_Module_Boo
             $this->moduleSettings = new Zend_Config_Ini($iniPath);
         }
     }
-    
+
     protected function _initModuleAutoload ()
     {
         $this->bootstrap('module');
 
         $options = array(
-        	'namespace' => ucfirst(strtolower($this->getModuleName())), 
-        	'basePath' => $this->path
+            'namespace' => ucfirst(strtolower($this->getModuleName())),
+            'basePath' => $this->path
         );
         $this->autoloader = new Zend_Loader_Autoloader_Resource($options);
         # autoload the api and delegates
         $options = array(
             'api' => array(
-            	'path' => "api" . DIRECTORY_SEPARATOR, 
-            	'namespace' => "Api"
-            ), 
+                'path' => "api" . DIRECTORY_SEPARATOR,
+                'namespace' => "Api"
+            ),
             'baseDelegate' => array(
                 'path'      => 'delegates' . DIRECTORY_SEPARATOR . 'default' . DIRECTORY_SEPARATOR,
                 'namespace' => 'Delegate_Default'
@@ -70,7 +70,7 @@ class FansubCMS_Application_Module_Bootstrap extends Zend_Application_Module_Boo
         );
         $this->autoloader->addResourceTypes($options);
     }
-    
+
     protected function _initRoute ()
     {
         $this->bootstrap('module');
@@ -79,7 +79,7 @@ class FansubCMS_Application_Module_Bootstrap extends Zend_Application_Module_Boo
             $router->addConfig($this->moduleSettings->routes->router, 'routes');
         }
     }
-    
+
     protected function _initI18n()
     {
         $ch = FansubCMS_Cache_Helper::getInstance();
@@ -112,7 +112,7 @@ class FansubCMS_Application_Module_Bootstrap extends Zend_Application_Module_Boo
             foreach($arr as $val) {
                 $ret = array_merge($ret, $val);
             }
-            
+
             $trans = $ret;
             $cache->save($trans);
         }
@@ -122,7 +122,7 @@ class FansubCMS_Application_Module_Bootstrap extends Zend_Application_Module_Boo
         $transObj->addTranslation($trans, $locale);
         # save the transjation to registry
         Zend_Registry::set('Zend_Translate',$transObj);
-        
+
         return $transObj;
     }
 }

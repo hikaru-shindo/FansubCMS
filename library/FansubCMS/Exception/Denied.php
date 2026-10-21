@@ -25,5 +25,5 @@
  */
 class FansubCMS_Exception_Denied extends Zend_Exception
 {
-    
+
 }

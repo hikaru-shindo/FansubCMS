@@ -18,7 +18,9 @@
 
 class FansubCMS_Controller_Plugin_Navigation extends Zend_Controller_Plugin_Abstract
 {
-    public function postDispatch(Zend_Controller_Request_Abstract $request) 
+    public $layout;
+
+    public function postDispatch(Zend_Controller_Request_Abstract $request)
     {
         $this->layout = Zend_Layout::getMvcInstance();
         $ch = FansubCMS_Cache_Helper::getInstance();
@@ -57,13 +59,13 @@ class FansubCMS_Controller_Plugin_Navigation extends Zend_Controller_Plugin_Abst
             $navigation = new Zend_Navigation($config);
         } else {
             $config = $cache->load('Navigation_Frontend_Settings');
-            
+
             if(!$config) {
                 $config = new Zend_Config_Ini(APPLICATION_PATH.'/configs/navigation.ini','nav');
                 $config = $config->toArray();
                 $cache->save($config);
             }
-            
+
             if(Zend_Auth::getInstance()->hasIdentity()) {
                 $adminPage = array(
                     'administrationLinkAdministration' => array(

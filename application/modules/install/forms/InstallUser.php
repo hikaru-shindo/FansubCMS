@@ -93,7 +93,7 @@ class Install_Form_InstallUser extends Zend_Form {
                 )))
                 ->setRequired(true)
                 ->setLabel('email');
-        
+
         # add elements to the form
         $this->addElement($username)
                 ->addElement($password)

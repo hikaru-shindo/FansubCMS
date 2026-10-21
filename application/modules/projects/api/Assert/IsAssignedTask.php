@@ -25,17 +25,17 @@ class Projects_Api_Assert_IsAssignedTask implements Zend_Acl_Assert_Interface
             return false;
         }
         $ident = $auth->getIdentity();
-        
+
         $isLeader = new Projects_Api_Assert_IsLeader();
-        
+
         if($isLeader->assert($acl, $role, $resource->Projects_Model_TaskType->Projects_Model_Project)) {
             return true;
         }
-        
+
         if($resource->user_id == $ident->id) {
             return true;
         }
-        
+
         return false;
     }
 }

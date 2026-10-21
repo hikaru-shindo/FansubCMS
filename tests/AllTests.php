@@ -33,7 +33,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
- * 
+ *
  * @package   phpUnderControl
  * @author    Manuel Pichler <mapi@phpundercontrol.org>
  * @author 	  Hikaru-Shindo <hikaru@animeownage.de>
@@ -77,7 +77,7 @@ class phpucAllTests
     {
         PHPUnit_TextUI_TestRunner::run( self::suite() );
     }
-    
+
     /**
      * Creates the phpunit test suite for this package.
      *
@@ -90,7 +90,7 @@ class phpucAllTests
         $suite->addTestSuite('DummyTest');
         $suite->addTestSuite('InitTests');
         $suite->addTestSuite('Admin_AuthTest');
-        
+
         return $suite;
     }
 }

@@ -50,7 +50,7 @@ class FansubCMS_View_Helper_Translate extends Zend_View_Helper_Translate
                 $messageid = str_replace('%' . $key . '%', $value, $messageid);
             }
         }
-        
+
         return $messageid;
     }
 }

@@ -22,7 +22,7 @@ class Admin_AuthController extends FansubCMS_Controller_Action
     {
         $settings = Zend_Registry::get('environmentSettings');
         $layoutVersion = $settings->page->layout;
-        
+
         # we don't need the admin menu
         $layout = Zend_Layout::getMvcInstance();
         $layout->setLayout('frontend');

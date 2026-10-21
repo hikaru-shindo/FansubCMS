@@ -33,23 +33,23 @@ class Cms_ErrorController extends FansubCMS_Controller_Action
         $errors = $this->_getParam('error_handler');
         $this->view->pageTitle = $this->translate("error_encountered");
         if($errors == null) {
-        	$errors = new stdClass();
-        	$errors->type = Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER;
-        	$errors->exception = new Exception("Invalid controller specified (error)");
-        	$errors->request = $this->getRequest();
+            $errors = new stdClass();
+            $errors->type = Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER;
+            $errors->exception = new Exception("Invalid controller specified (error)");
+            $errors->request = $this->getRequest();
         }
         $this->view->exception = $errors->exception;
         $this->view->request   = $errors->request;
-        
+
         if($errors->exception instanceof FansubCMS_Exception_Denied) {
             $this->view->error = $this->translate("denied_error");
-            $this->getResponse()->setHttpResponseCode(403); // forbidden, 
-    	                                                // alternative 401 unauthorized 
-    	                                                // s. http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
+            $this->getResponse()->setHttpResponseCode(403); // forbidden,
+                                                        // alternative 401 unauthorized
+                                                        // s. http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
             $this->renderScript('error/denied.phtml');
             return;
         }
-        
+
         switch ($errors->type) {
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER:
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION:

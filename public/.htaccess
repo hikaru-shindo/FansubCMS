@@ -1,6 +1,6 @@
 SetEnv APPLICATION_ENV development
 
-Options -MultiViews 
+Options -MultiViews
 
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} -s [OR]

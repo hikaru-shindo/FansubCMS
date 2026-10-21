@@ -10,7 +10,7 @@
 <?php if(count($this->team)): ?>
 <?php foreach($this->team as $member): ?>
 <div class="project_member">
-    <?=$member->User_Model_User->name?> &lt;<?=$member->function?>&gt; 
+    <?=$member->User_Model_User->name?> &lt;<?=$member->function?>&gt;
     <?=$this->partial('partials/teamMemberActions.phtml', array('member' => $member))?>
 </div>
 <?php endforeach; ?>

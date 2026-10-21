@@ -25,23 +25,23 @@
 class FansubCMS_Auth_Storage_DoctrineSession extends Zend_Auth_Storage_Session
 {
     protected static $_data;
-    
+
     public function __construct($namespace = self::NAMESPACE_DEFAULT, $member = self::MEMBER_DEFAULT)
     {
         parent::__construct($namespace, $member);
     }
-    
+
     public function write($contents)
     {
         parent::write($contents->id);
     }
-    
+
     public function read()
     {
         if(empty(self::$_data)) {
             self::$_data = Doctrine_Core::getTable('User_Model_User')->find(parent::read());
         }
-        
+
         return self::$_data;
     }
 }

@@ -25,24 +25,24 @@ class Projects_Api_Assert_IsLeader implements Zend_Acl_Assert_Interface
             return false;
         }
         $ident = $auth->getIdentity();
-        
+
         if($resource->getResourceId() == 'projects_m_project') {
             foreach($resource->Projects_Model_Leader as $leader) {
                 if($leader->user_id == $ident->id) {
                     return true;
                 }
             }
-            
+
             return false;
         } else {
             $q = Doctrine_Query::create()
                     ->from('Projects_Model_Leader pl')
                     ->where('user_id = ?', $ident->id);
-            
+
             if($q->count()) {
                 return true;
             }
-            
+
             return false;
         }
     }

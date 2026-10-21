@@ -25,12 +25,12 @@
 class Cms_AdminController extends FansubCMS_Controller_Action
 {
     protected $_staticPath;
-    
+
     public function init ()
     {
         $this->_staticPath = realpath(APPLICATION_PATH . '/resource/static');
     }
-    
+
     public function exportLayoutAction ()
     {
         $layout = $this->request->getParam('layout');
@@ -42,23 +42,23 @@ class Cms_AdminController extends FansubCMS_Controller_Action
         $viewPaths = glob(
         APPLICATION_PATH . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR . '*' . DIRECTORY_SEPARATOR . 'views' .
          DIRECTORY_SEPARATOR . $layout);
-        
+
         if (empty($layout)) {
             die('no layout given');
         }
-        
+
         if (! is_dir($layoutPath)) {
             die('layout path does not exist');
         }
-        
+
         if (! is_dir($layoutMediaPath)) {
             die('layout media path does not exist');
         }
-        
+
         $tempPath = $this->_getTempPath();
         $tempDir = $tempPath . DIRECTORY_SEPARATOR . md5(time()) . '_style';
         $tempLayoutDir = $tempDir . DIRECTORY_SEPARATOR . 'layout';
-        
+
         if (mkdir($tempDir)) {
             // create base dirs
             mkdir($tempLayoutDir);
@@ -73,57 +73,57 @@ class Cms_AdminController extends FansubCMS_Controller_Action
             mkdir(
             $tempLayoutDir . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'media' . DIRECTORY_SEPARATOR .
              $layout);
-            
+
             // copy base
-            $this->_recurseCopy($layoutPath, 
+            $this->_recurseCopy($layoutPath,
             $tempLayoutDir . DIRECTORY_SEPARATOR . 'application' . DIRECTORY_SEPARATOR . 'layouts' . DIRECTORY_SEPARATOR .
              $layout);
-            $this->_recurseCopy($layoutMediaPath, 
+            $this->_recurseCopy($layoutMediaPath,
             $tempLayoutDir . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'media' . DIRECTORY_SEPARATOR .
              $layout);
-            
+
             foreach ($viewPaths as $vP) {
                 $cleanVP = str_replace(APPLICATION_PATH, '', $vP);
-                $this->_recurseCopy($vP, 
+                $this->_recurseCopy($vP,
                 $tempLayoutDir . DIRECTORY_SEPARATOR . 'application' . DIRECTORY_SEPARATOR . $cleanVP);
             }
-            
+
             foreach ($delegatePaths as $dP) {
                 $cleanDP = str_replace(APPLICATION_PATH, '', $dP);
-                $this->_recurseCopy($dP, 
+                $this->_recurseCopy($dP,
                 $tempLayoutDir . DIRECTORY_SEPARATOR . 'application' . DIRECTORY_SEPARATOR . $cleanDP);
             }
-            
+
             $this->_zip($tempLayoutDir, $tempDir . DIRECTORY_SEPARATOR . $layout . '.zip');
-            
+
             header('Content-type: application/zip');
             header('Content-Disposition: attachment; filename="' . $layout . '.zip"');
-            
+
             readfile($tempDir . DIRECTORY_SEPARATOR . $layout . '.zip');
         } else {
             die('could not create temporary dir');
         }
-        
+
         die();
     }
-    
+
     public function liststaticAction ()
     {
         $this->view->pageTitle = $this->translate('cms_list_static_headline');
         if ($this->acl->isAllowed($this->defaultUseRole, 'user_admin', 'editatic'))
-            $this->session->tableActions['cms_edit_static'] = array('module' => 'cms', 'controller' => 'admin', 
+            $this->session->tableActions['cms_edit_static'] = array('module' => 'cms', 'controller' => 'admin',
             'action' => 'editstatic');
         if ($this->acl->isAllowed($this->defaultUseRole, 'user_admin', 'deletestatic'))
-            $this->session->tableActions['cms_delete_static'] = array('module' => 'cms', 'controller' => 'admin', 
+            $this->session->tableActions['cms_delete_static'] = array('module' => 'cms', 'controller' => 'admin',
             'action' => 'deletestatic');
-        
+
         $pages = glob($this->_staticPath . DIRECTORY_SEPARATOR . '*.html');
         $pages = str_replace($this->_staticPath . DIRECTORY_SEPARATOR, '', $pages);
         $pages = str_replace('.html', '', $pages);
-        
+
         $this->view->pages = $pages;
     }
-    
+
     public function editstaticAction ()
     {
         $this->view->pageTitle = $this->translate('cms_edit_static_headline');
@@ -151,7 +151,7 @@ class Cms_AdminController extends FansubCMS_Controller_Action
             array('action' => 'liststatic', 'controller' => 'admin', 'module' => 'cms'));
         }
     }
-    
+
     public function addstaticAction ()
     {
         $this->view->pageTitle = $this->translate('cms_add_static_headline');
@@ -161,7 +161,7 @@ class Cms_AdminController extends FansubCMS_Controller_Action
         if ($req->isPost()) { // there are profile updates
             if ($this->view->form->isValid($_POST)) {
                 $values = $this->view->form->getValues();
-                @file_put_contents($this->_staticPath . DIRECTORY_SEPARATOR . $values['title'] . '.html', 
+                @file_put_contents($this->_staticPath . DIRECTORY_SEPARATOR . $values['title'] . '.html',
                 $values['text']);
                 $this->session->message = $this->translate('cms_admin_addstatic_success');
                 $this->_helper->redirector->gotoRoute(
@@ -171,7 +171,7 @@ class Cms_AdminController extends FansubCMS_Controller_Action
             }
         }
     }
-    
+
     public function deletestaticAction ()
     {
         $this->view->pageTitle = $this->translate('cms_delete_static_headline');
@@ -195,7 +195,7 @@ class Cms_AdminController extends FansubCMS_Controller_Action
             array('action' => 'liststatic', 'controller' => 'admin', 'module' => 'cms'));
         }
     }
-    
+
     /**
      * Copy dir recursive
      * @param $source
@@ -212,7 +212,7 @@ class Cms_AdminController extends FansubCMS_Controller_Action
         if (is_dir($source)) {
             $oldmask = umask(0);
             @mkdir($destination, 0777, true);
-            umask($oldmask); 
+            umask($oldmask);
             $dir_handle = opendir($source);
             while ($files = readdir($dir_handle))
                 if ($files != "." && $files != "..")
@@ -225,7 +225,7 @@ class Cms_AdminController extends FansubCMS_Controller_Action
                 $this->_recurseCopy($source  . DIRECTORY_SEPARATOR . $file, $destination . DIRECTORY_SEPARATOR . $file);
         }
     }
-    
+
     /**
      * Create a zip archive recursive
      * @param string $source
@@ -239,40 +239,40 @@ class Cms_AdminController extends FansubCMS_Controller_Action
                 $zip = new ZipArchive();
                 if ($zip->open($destination, ZIPARCHIVE::CREATE) === true) {
                     $source = realpath($source);
-                    
+
                     if (is_dir($source) === true) {
-                        $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($source), 
+                        $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($source),
                         RecursiveIteratorIterator::SELF_FIRST);
-                        
+
                         foreach ($files as $file) {
                             $file = realpath($file);
                             if (is_dir($file) === true) {
                                 $zip->addEmptyDir(str_replace($source . DIRECTORY_SEPARATOR, '', $file . '/'));
-                            } 
+                            }
 
-                            else 
+                            else
                                 if (is_file($file) === true) {
-                                    $zip->addFromString(str_replace($source . DIRECTORY_SEPARATOR, '', $file), 
+                                    $zip->addFromString(str_replace($source . DIRECTORY_SEPARATOR, '', $file),
                                     file_get_contents($file));
                                 }
                         }
-                    } 
+                    }
 
-                    else 
+                    else
                         if (is_file($source) === true) {
                             $zip->addFromString(basename($source), file_get_contents($source));
                         }
                 }
-                
+
                 return $zip->close();
             }
         }
-        
+
         return false;
     }
-    
+
     /**
-     * 
+     *
      * Retuns the temp path
      * @return string
      */

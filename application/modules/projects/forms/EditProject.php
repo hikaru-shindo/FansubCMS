@@ -26,7 +26,7 @@ class Projects_Form_EditProject extends Zend_Form {
                 ->setMethod('post')
                 ->setAttrib('id', $insert ? 'addproject' : 'editproject');
 
-        # name      
+        # name
         $name = $this->createElement('text', 'name')
                 ->addFilter('StripTags')
                 ->addFilter('StringTrim')
@@ -76,7 +76,7 @@ class Projects_Form_EditProject extends Zend_Form {
                 ->setValue(isset($values['element_count']) ? $values['element_count'] : null)
                 ->setLabel('project_admin_field_episode_count');
 
-        
+
         # status
         $status = $this->createElement('select', 'status')
                 ->addValidator('NotEmpty', true, array(
@@ -145,12 +145,12 @@ class Projects_Form_EditProject extends Zend_Form {
 
         $uTable = Doctrine::getTable('User_Model_User');
         $users = $uTable->getMultiOptions();
-        
+
         $leaders = $this->createElement('multiselect', 'leaders');
         $leaders->setMultiOptions($users)
                 ->setLabel('project_admin_field_leader')
                 ->setValue(isset($values['Projects_Model_Leader']) ? $values['Projects_Model_Leader'] : array());
-        
+
         $private = $this->createElement('radio', 'private')
                 ->setMultiOptions(array(
                 'yes' => 'yes_term',

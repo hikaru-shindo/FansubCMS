@@ -18,7 +18,7 @@
 
 class FansubCMS_Controller_Plugin_Gadget extends Zend_Controller_Plugin_Abstract
 {
-    public function postDispatch(Zend_Controller_Request_Abstract $request) 
+    public function postDispatch(Zend_Controller_Request_Abstract $request)
     {
         $view = Zend_Layout::getMvcInstance()->getView();
         $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/environment.ini', 'gadgets');

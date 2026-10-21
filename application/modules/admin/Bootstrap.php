@@ -16,7 +16,7 @@
  *  along with FansubCMS.  If not, see <http://www.gnu.org/licenses/>
  */
 
-class Admin_Bootstrap extends FansubCMS_Application_Module_Bootstrap 
+class Admin_Bootstrap extends FansubCMS_Application_Module_Bootstrap
 {
 
 }

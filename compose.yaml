@@ -1,0 +1,70 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile_inline: |
+        FROM docker.io/library/php:8.5.12-cli-trixie
+        RUN apt-get update \
+         && apt-get install -y --no-install-recommends \
+              libfreetype-dev \
+              libjpeg62-turbo-dev \
+              libpng-dev \
+              libwebp-dev \
+         && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
+         && docker-php-ext-install -j"$$(nproc)" gd pdo_mysql \
+         && rm -rf /var/lib/apt/lists/*
+    working_dir: /app
+    init: true
+    command:
+      - php
+      - -d
+      - error_reporting=E_ALL
+      - -d
+      - display_errors=1
+      - -d
+      - log_errors=1
+      - -S
+      - 0.0.0.0:8080
+      - -t
+      - public
+      - dev/router.php
+    volumes:
+      - .:/app
+    ports:
+      - "127.0.0.1:8080:8080"
+    environment:
+      APPLICATION_ENV: development
+      PHP_CLI_SERVER_WORKERS: "4"
+    user: "${APP_UID:-1000}:${APP_GID:-1000}"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: docker.io/library/mariadb:11.8.9
+    # Run a minimal init as PID 1 so processes started with `exec` are reaped
+    # and the container can always stop cleanly.
+    init: true
+    # Development tuning: faster imports, less durability on crash. Not for production.
+    command:
+      - --innodb-buffer-pool-size=1G
+      - --innodb-log-file-size=512M
+      - --innodb-flush-log-at-trx-commit=2
+      - --skip-log-bin
+    environment:
+      MARIADB_DATABASE: fansubcms
+      MARIADB_USER: fansubcms
+      MARIADB_PASSWORD: fansubcms
+      MARIADB_ROOT_PASSWORD: root
+    volumes:
+      - db-data:/var/lib/mysql
+    ports:
+      - "127.0.0.1:3306:3306"
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  db-data:

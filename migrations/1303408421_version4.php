@@ -7,7 +7,7 @@ class Version4 extends Doctrine_Migration_Base
     public function up()
     {
         $this->addIndex('projects', 'projects_sluggable', array(
-             'fields' => 
+             'fields' =>
              array(
               0 => 'name_slug',
              ),
@@ -18,16 +18,16 @@ class Version4 extends Doctrine_Migration_Base
     public function down()
     {
         $this->removeIndex('projects', 'projects_sluggable', array(
-             'fields' => 
+             'fields' =>
              array(
               0 => 'name_slug',
              ),
              'type' => 'unique',
              ));
     }
-    
+
     public function postUp()
-    {   
+    {
         $records = Projects_Model_ProjectTable::getInstance()->findAll();
 
         foreach($records as $record) {

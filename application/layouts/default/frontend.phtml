@@ -48,7 +48,7 @@
                 <div class="infobox">
                         <?=$this->message?>
                 </div>
-                
+
                 <?php endif;
                 ?>
                 <div class="box fullwidth">
@@ -60,14 +60,14 @@
                 // show the gadgets, that were configured
                 if (is_array($this->gadgets)) {
                     foreach ($this->gadgets as $gadget) {
-                        $content = $this->action($gadget['action'], $gadget['name'], 
+                        $content = $this->action($gadget['action'], $gadget['name'],
                         'gadgets', $gadget['params']);
-                        
+
                         echo $this->partial('partials/gadgetLayout.phtml', array(
                             'label' => $gadget['label'],
                             'content' => $content
                         ));
-                    } 
+                    }
                 }
                 ?>
 </div>

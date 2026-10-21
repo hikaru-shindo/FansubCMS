@@ -7,18 +7,18 @@ class Version2 extends Doctrine_Migration_Base
     public function up()
     {
         $this->addIndex('news', 'news_sluggable', array(
-             'fields' => 
+             'fields' =>
              array(
               0 => 'title_slug',
              ),
              'type' => 'unique',
              ));
     }
-    
+
     public function postUp()
     {
         $table = Doctrine::getTable('News_Model_News');
-        
+
         $records = $table->findAll();
 
         foreach($records as $record) {
@@ -32,7 +32,7 @@ class Version2 extends Doctrine_Migration_Base
     public function down()
     {
         $this->removeIndex('news', 'news_sluggable', array(
-             'fields' => 
+             'fields' =>
              array(
               0 => 'title_slug',
              ),

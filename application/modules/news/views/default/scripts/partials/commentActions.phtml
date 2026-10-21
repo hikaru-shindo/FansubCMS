@@ -1,16 +1,16 @@
-<?php 
+<?php
 if(Zend_Auth::getInstance()->hasIdentity()):
 $acl = Zend_Registry::get('Zend_Acl');
 $role = 'fansubcms_user_custom_role_logged_in_user';
 if($acl->isAllowed($role,'news_admin','editcomment')):
 ?>
 <!-- <a href="<?=$this->baseUrl()?>/news/admin/editcomment/id/<?=$this->id?>"><?=$this->translate('update')?></a> | -->
-<?php 
+<?php
 endif;
 if($acl->isAllowed($role,'news_admin','editcomment')):
 ?>
 <a href="<?=$this->baseUrl()?>/news/admin/deletecomment/id/<?=$this->id?>"><?=$this->translate('delete')?></a> |
-<?php 
+<?php
 endif;
 if($acl->isAllowed($role,'news_admin','markspam')):
 ?>

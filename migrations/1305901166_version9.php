@@ -23,13 +23,13 @@ class Version9 extends Doctrine_Migration_Base
              'onDelete' => 'CASCADE',
              ));
         $this->addIndex('project_tasks', 'project_tasks_task_id', array(
-             'fields' => 
+             'fields' =>
              array(
               0 => 'task_id',
              ),
              ));
         $this->addIndex('project_tasks', 'project_tasks_user_id', array(
-             'fields' => 
+             'fields' =>
              array(
               0 => 'user_id',
              ),
@@ -41,13 +41,13 @@ class Version9 extends Doctrine_Migration_Base
         $this->dropForeignKey('project_tasks', 'project_tasks_task_id_project_task_types_id');
         $this->dropForeignKey('project_tasks', 'project_tasks_user_id_users_id');
         $this->removeIndex('project_tasks', 'project_tasks_task_id', array(
-             'fields' => 
+             'fields' =>
              array(
               0 => 'task_id',
              ),
              ));
         $this->removeIndex('project_tasks', 'project_tasks_user_id', array(
-             'fields' => 
+             'fields' =>
              array(
               0 => 'user_id',
              ),

@@ -63,7 +63,7 @@ class FansubCMS_Acl extends Zend_Acl
             }
         }
     }
-    
+
     public function addResources( array $resources )
     {
         foreach( $resources as $source ) {
@@ -92,13 +92,13 @@ class FansubCMS_Acl extends Zend_Acl
             $class = null;
             if( array_key_exists('assert', $source) ) {
                 if( $class  = $source['assert'] ) {
-                    
+
                     if( !class_exists( $class ) ) {
                         throw new Zend_Acl_Exception(sprintf('Class %s does not exist', $class));
                     }
                 }
             }
-            
+
             $assert = $class ? new $class : $class;
             $this->allow($role, $resource, $privileges, $assert);
         }
@@ -119,7 +119,7 @@ class FansubCMS_Acl extends Zend_Acl
                     }
                 }
             }
-            
+
             $assert = $class ? new $class : $class;
             $this->deny($role, $resource, $privileges, $assert);
         }

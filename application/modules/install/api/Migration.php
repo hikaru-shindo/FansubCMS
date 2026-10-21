@@ -16,24 +16,24 @@
  *  along with FansubCMS.  If not, see <http://www.gnu.org/licenses/>
  */
 
-class Install_Api_Migration 
+class Install_Api_Migration
 {
     /**
      * Instance of this class
-     * 
+     *
      * @var Install_Api_Migration
      */
     protected static $_instance;
     /**
      * The migration object
-     * 
+     *
      * @var Doctrine_Migration
      */
     private $_migration;
 
     /**
      * returns an instance of Install_Api_Migration
-     * 
+     *
      * @return Install_Api_Migration
      */
     public static function getInstance()
@@ -76,7 +76,7 @@ class Install_Api_Migration
      */
     public function migrateDryRun($to = null)
     {
-        return $this->_migration->migrateDryRun($to); 
+        return $this->_migration->migrateDryRun($to);
     }
 
     /**
@@ -94,14 +94,14 @@ class Install_Api_Migration
         if(empty($to)) {
             $to = $this->_migration->getLatestVersion();
         }
-        
+
         $result = $this->_migration->migrate($to, $dryRun);
-        
+
         // TODO: This is a dirty fix for problems... if we get here migration was successful
         if(!$dryRun && $result) {
             $this->_migration->setCurrentVersion($to);
         }
-        
+
         return $result;
     }
 

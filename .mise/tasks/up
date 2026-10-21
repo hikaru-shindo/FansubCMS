@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+#MISE description="Start the development environment (PHP built-in server + MariaDB)"
+#MISE alias="dev"
+#
+# Any arguments are passed to `compose up` (default: --build).
+#   mise run up               -> compose up --build
+#   mise run up -- -d         -> compose up -d
+set -euo pipefail
+
+# shellcheck source=../lib/compose.sh
+source "$(dirname "${BASH_SOURCE[0]}")/../lib/compose.sh"
+
+if [[ $# -eq 0 ]]; then
+    set -- --build
+fi
+
+echo "Using: ${compose[*]} (engine: ${engine}, uid:gid ${APP_UID}:${APP_GID}, ${user_note})" >&2
+exec "${compose[@]}" up "$@"

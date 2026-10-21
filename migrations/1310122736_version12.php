@@ -7,50 +7,50 @@ class Version12 extends Doctrine_Migration_Base
     public function up()
     {
         $this->createTable('project_chapter_releases', array(
-             'id' => 
+             'id' =>
              array(
               'type' => 'integer',
               'primary' => '1',
               'autoincrement' => '1',
               'length' => '8',
              ),
-             'chapter_id' => 
+             'chapter_id' =>
              array(
               'type' => 'integer',
               'length' => '8',
              ),
-             'format' => 
+             'format' =>
              array(
               'type' => 'string',
               'length' => '10',
              ),
-             'resolution' => 
+             'resolution' =>
              array(
               'type' => 'string',
               'length' => '10',
              ),
-             'title' => 
+             'title' =>
              array(
               'type' => 'string',
               'length' => '255',
              ),
-             'updated_by' => 
+             'updated_by' =>
              array(
               'type' => 'string',
               'length' => '32',
              ),
-             'released_at' => 
+             'released_at' =>
              array(
               'type' => 'timestamp',
               'length' => '25',
              ),
-             'created_at' => 
+             'created_at' =>
              array(
               'notnull' => '1',
               'type' => 'timestamp',
               'length' => '25',
              ),
-             'updated_at' => 
+             'updated_at' =>
              array(
               'notnull' => '1',
               'type' => 'timestamp',
@@ -58,7 +58,7 @@ class Version12 extends Doctrine_Migration_Base
              ),
              ), array(
              'type' => 'InnoDB',
-             'primary' => 
+             'primary' =>
              array(
               0 => 'id',
              ),
@@ -66,55 +66,55 @@ class Version12 extends Doctrine_Migration_Base
              'charset' => 'utf8',
              ));
         $this->createTable('project_episode_releases', array(
-             'id' => 
+             'id' =>
              array(
               'type' => 'integer',
               'primary' => '1',
               'autoincrement' => '1',
               'length' => '8',
              ),
-             'episode_id' => 
+             'episode_id' =>
              array(
               'type' => 'integer',
               'length' => '8',
              ),
-             'vcodec' => 
+             'vcodec' =>
              array(
               'type' => 'string',
               'length' => '10',
              ),
-             'acodec' => 
+             'acodec' =>
              array(
               'type' => 'string',
               'length' => '10',
              ),
-             'container' => 
+             'container' =>
              array(
               'type' => 'string',
               'length' => '10',
              ),
-             'crc' => 
+             'crc' =>
              array(
               'type' => 'string',
               'length' => '8',
              ),
-             'released_at' => 
+             'released_at' =>
              array(
               'type' => 'timestamp',
               'length' => '25',
              ),
-             'updated_by' => 
+             'updated_by' =>
              array(
               'type' => 'string',
               'length' => '32',
              ),
-             'created_at' => 
+             'created_at' =>
              array(
               'notnull' => '1',
               'type' => 'timestamp',
               'length' => '25',
              ),
-             'updated_at' => 
+             'updated_at' =>
              array(
               'notnull' => '1',
               'type' => 'timestamp',
@@ -122,7 +122,7 @@ class Version12 extends Doctrine_Migration_Base
              ),
              ), array(
              'type' => 'InnoDB',
-             'primary' => 
+             'primary' =>
              array(
               0 => 'id',
              ),

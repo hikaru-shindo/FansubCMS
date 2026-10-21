@@ -7,40 +7,40 @@ class Version7 extends Doctrine_Migration_Base
     public function up()
     {
         $this->createTable('project_tasks', array(
-             'id' => 
+             'id' =>
              array(
               'type' => 'integer',
               'primary' => '1',
               'autoincrement' => '1',
               'length' => '8',
              ),
-             'task_id' => 
+             'task_id' =>
              array(
               'type' => 'integer',
               'length' => '8',
              ),
-             'user_id' => 
+             'user_id' =>
              array(
               'type' => 'integer',
               'length' => '8',
              ),
-             'done' => 
+             'done' =>
              array(
               'type' => 'integer',
               'length' => '3',
              ),
-             'comment' => 
+             'comment' =>
              array(
               'type' => 'string',
               'length' => '60000',
              ),
-             'created_at' => 
+             'created_at' =>
              array(
               'notnull' => '1',
               'type' => 'timestamp',
               'length' => '25',
              ),
-             'updated_at' => 
+             'updated_at' =>
              array(
               'notnull' => '1',
               'type' => 'timestamp',
@@ -48,7 +48,7 @@ class Version7 extends Doctrine_Migration_Base
              ),
              ), array(
              'type' => 'InnoDB',
-             'primary' => 
+             'primary' =>
              array(
               0 => 'id',
              ),
@@ -56,31 +56,31 @@ class Version7 extends Doctrine_Migration_Base
              'charset' => 'utf8',
              ));
         $this->createTable('project_task_types', array(
-             'id' => 
+             'id' =>
              array(
               'type' => 'integer',
               'primary' => '1',
               'autoincrement' => '1',
               'length' => '8',
              ),
-             'project_id' => 
+             'project_id' =>
              array(
               'type' => 'integer',
               'length' => '8',
              ),
-             'title' => 
+             'title' =>
              array(
               'type' => 'string',
               'length' => '255',
              ),
-             'description' => 
+             'description' =>
              array(
               'type' => 'string',
               'length' => '60000',
              ),
              ), array(
              'type' => 'InnoDB',
-             'primary' => 
+             'primary' =>
              array(
               0 => 'id',
              ),

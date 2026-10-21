@@ -17,7 +17,7 @@
  */
 
 /**
- * 
+ *
  * Helps with the application logging
  * @author Hikaru-Shindo <hikaru@animeownage.de>
  * @package FansubCMS
@@ -29,14 +29,14 @@ class FansubCMS_Helper_Log
      * @var FansubCMS_Helper_Log
      */
     protected static $_instance;
-    
+
     /**
      * @var Zend_Log
      */
     protected static $_logger;
-    
+
     /**
-     * 
+     *
      * constructs the helper
      */
     protected function __construct ()
@@ -46,38 +46,38 @@ class FansubCMS_Helper_Log
             $writer->setDefaultPriorityStyle('EXCEPTION');
         } else {
             $mailConfig = Zend_Registry::get('emailSettings');
-            
-            if($mtconf->sendmail) { 
+
+            if($mtconf->sendmail) {
                 $mtconf = array(
                 'auth' => 'login',
                 'username' => $mailConfig->smtp->user,
                 'password' => $mailConfig->smtp->password,
                 'port' => $mailConfig->smtp->port,
                 );
-                
-                
+
+
                 if($mailConfig->smtp->ssl) {
                     $mtconf['ssl'] = 'tls';
                 }
-            
+
                 $transport = new Zend_Mail_Transport_Smtp($mailConfig->smtp->host, $mtconf);
             } else {
-                $transport = new Zend_Mail_Transport_Sendmail();    
+                $transport = new Zend_Mail_Transport_Sendmail();
             }
-            
+
             Zend_Mail::setDefaultTransport($transport);
-            
+
             $mail = new Zend_Mail('UTF-8');
             $mail->setFrom($mailConfig->email->noreply, 'FansubCMS Error Report');
             $mail->addTo($mailConfig->email->admin, 'FansubCMS Technical Administrator at' . $_SERVER['HTTP_HOST']);
             $mail->addHeader('X-MailGenerator','Log handler on FansubCMS');
             $mail->addHeader('X-Mailer','FansubCMS');
             $mail->addHeader('X-Priority','3');
-            
+
             $writer = new Zend_Log_Writer_Mail($mail);
             $writer->setSubjectPrependText('FansubCMS Error: ');
         }
-        
+
         switch(APPLICATION_ENV) {
             case 'debug': // is handled by dev bar through
                 $writer->addFilter(Zend_Log::DEBUG);
@@ -91,11 +91,11 @@ class FansubCMS_Helper_Log
         }
 
         $logger = new Zend_Log($writer);
-        
+
         self::$_logger = $logger;
-        
+
     }
-    
+
     /**
      * Get an instance of the helper
      * @return FansubCMS_Helper_Log
@@ -107,9 +107,9 @@ class FansubCMS_Helper_Log
         }
         return self::$_instance;
     }
-    
+
     /**
-     * 
+     *
      * Logs the $message
      * @param string $message
      * @param integer $priority

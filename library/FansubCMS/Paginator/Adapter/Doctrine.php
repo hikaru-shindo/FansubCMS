@@ -11,32 +11,32 @@ class FansubCMS_Paginator_Adapter_Doctrine implements Zend_Paginator_Adapter_Int
 {
     /**
      * The actual query to use
-     * 
+     *
      * @var Doctrine_Query
      */
     protected $_query;
     /**
      * The mode for the hydration
-     * 
+     *
      * @var integer
      */
     protected $_hydrationMode;
-    
+
     /**
      * Construct the instance of the paginator class
-     * 
+     *
      * @param Doctrine_Query $query
-     * @param integer $hydrationMode 
+     * @param integer $hydrationMode
      */
     public function __construct(Doctrine_Query $query, $hydrationMode = Doctrine_Core::HYDRATE_RECORD)
     {
         $this->_query = $query;
         $this->_hydrationMode = $hydrationMode;
     }
-    
+
     /**
      * Get the items
-     * 
+     *
      * @param integer $offset
      * @param integer $count
      * @return mixed
@@ -49,10 +49,10 @@ class FansubCMS_Paginator_Adapter_Doctrine implements Zend_Paginator_Adapter_Int
                         ->execute(array(), $this->_hydrationMode);
         return $result;
     }
-    
+
     /**
      * Get the item count
-     * 
+     *
      * @return integer
      */
     public function count()

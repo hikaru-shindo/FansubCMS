@@ -1,6 +1,6 @@
 function toogleVisibility(element,dur) {
-	if($(element).css("display") == "none") $(element).show(dur);
-	else $(element).hide(dur)
+  if($(element).css("display") == "none") $(element).show(dur);
+  else $(element).hide(dur)
 }
 
 function jumpFromSelect(location, select) {

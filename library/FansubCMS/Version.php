@@ -16,7 +16,7 @@
  *  along with FansubCMS.  If not, see <http://www.gnu.org/licenses/>
  */
 /**
- * 
+ *
  * This class provides access to version management
  * @author Hikaru-Shindo <hikaru@fansubcode.org>
  *
@@ -24,19 +24,19 @@
 class FansubCMS_Version
 {
     /**
-     * 
+     *
      * The current application version
      * @var string
      */
-    const VERSION = '0.9.1-git';
+    const VERSION = '0.10.0-git';
     /**
-     * 
+     *
      * Zend Framework
      * @var string
      */
     const ZEND = 'zend';
     /**
-     * 
+     *
      * Doctrine ORM
      * @var string
      */
@@ -48,14 +48,14 @@ class FansubCMS_Version
      */
     protected static $_lastestVersion;
     /**
-     * 
+     *
      * The url to get current versions from
      * @var string
      */
     protected static $_updateUrl = 'http://fansubcode.org/fancmsVersion';
-    
+
     /**
-     * 
+     *
      * Get the current version
      * @return string
      */
@@ -63,9 +63,9 @@ class FansubCMS_Version
     {
         return self::VERSION;
     }
-    
+
     /**
-     * 
+     *
      * Get the version of framework given
      * @param string $framework
      * @return string
@@ -77,10 +77,10 @@ class FansubCMS_Version
         } elseif($framework == self::DOCTRINE) {
             return Doctrine_Core::VERSION;
         }
-        
+
         return '';
     }
-    
+
     /**
      * Compare the specified Zend Framework version string $version
      * with the current Zend_Version::VERSION of Zend Framework.
@@ -94,11 +94,11 @@ class FansubCMS_Version
     public static function compareVersion($version)
     {
         $version = strtolower($version);
-               
+
         return version_compare($version, strtolower(self::VERSION));
     }
-    
-	/**
+
+    /**
      * Fetches the version of the latest stable release
      *
      * @return string
@@ -119,7 +119,7 @@ class FansubCMS_Version
                         break;
                     }
                 }
-                
+
                 fclose($handle);
             }
         }

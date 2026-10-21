@@ -33,7 +33,7 @@ class Projects_Form_EditTeamMember extends Zend_Form
                 ->addFilter('StringTrim')
                 ->setValue(!empty($values['function']) ? $values['function'] : null)
                 ->setLabel('project_admin_field_team_function');
-        
+
         # add elements to the form
         if($insert) {
             $this->addElement($user);
@@ -42,7 +42,7 @@ class Projects_Form_EditTeamMember extends Zend_Form
                 # edit button
                 ->addElement('submit', $insert ? 'add' : 'update', array('label' => $insert ? 'add' : 'update', 'class' => 'button'));
     }
-    
+
     protected function _getUserElement(Projects_Model_Project $project)
     {
         $q = Doctrine_Query::create()
@@ -50,18 +50,18 @@ class Projects_Form_EditTeamMember extends Zend_Form
                 ->from('User_Model_User u')
                 ->leftJoin('u.Projects_Model_User pu')
                 ->where('pu.project_id <> ?', $project->id)
-                ->orWhere('pu.project_id IS NULL')                
+                ->orWhere('pu.project_id IS NULL')
                 ->orderBy('u.name ASC');
         $users = $q->fetchArray();
-        
+
         $selectArray = array('' => 'pleasechoose');
-        
+
         foreach($users as $user) {
             $selectArray[$user['id']] = $user['name'];
         }
-        
+
         $elem = $this->createElement('select', 'user');
-        
+
         $elem->setLabel('project_admin_field_team_user')
                 ->addValidator('NotEmpty', true, array(
                 'messages' => array(
@@ -69,7 +69,7 @@ class Projects_Form_EditTeamMember extends Zend_Form
                 )))
                 ->setRequired(true)
                 ->setMultiOptions($selectArray);
-        
+
         return $elem;
     }
 }

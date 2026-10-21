@@ -16,13 +16,13 @@
  *  along with FansubCMS.  If not, see <http://www.gnu.org/licenses/>
  */
 
-class FansubCMS_Controller_Plugin_InstallCheck extends Zend_Controller_Plugin_Abstract 
+class FansubCMS_Controller_Plugin_InstallCheck extends Zend_Controller_Plugin_Abstract
 {
     /**
      * check if the cms is already installed or needs update and redirect to installer in one of these cases
      * @see Zend_Controller_Plugin_Abstract::preDispatch()
      */
-    public function preDispatch(Zend_Controller_Request_Abstract $request) 
+    public function preDispatch(Zend_Controller_Request_Abstract $request)
     {
         if($this->getRequest()->getModuleName() == 'install' || $this->getRequest()->getModuleName() == 'devtools') {
             # we don't need to check while we are in the installer itself
@@ -36,9 +36,9 @@ class FansubCMS_Controller_Plugin_InstallCheck extends Zend_Controller_Plugin_Ab
         } catch(Doctrine_Exception $e) {
             $installed = false;
         }
-        
+
         $redirect = new Zend_Controller_Action_Helper_Redirector();
-        
+
         if($installed) {
             # check if update is needed
             $mig = Install_Api_Migration::getInstance();

@@ -56,7 +56,7 @@ class FansubCMS_View_Helper_ModelList extends Zend_View_Helper_Abstract
      * @param Doctrine_Query_Abstract $query
      * @return string
      */
-    public function modelList($modelName, array $options = array(), Doctrine_Query_Abstract $query = null)
+    public function modelList($modelName, array $options = array(), ?Doctrine_Query_Abstract $query = null)
     {
         $options = array_merge(self::$_defaultOptions, $options);
 

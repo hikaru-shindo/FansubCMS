@@ -36,7 +36,7 @@ class Install_IndexController extends FansubCMS_Controller_Action {
         } catch(Doctrine_Exception $e) {
             $this->view->databaseInitNeeded = true;
         }
-        
+
         if(!$this->view->databaseInitNeeded && $this->view->databaseCurrent < $this->view->databaseLatest) {
             $this->view->databaseUpdateNeeded = true;
         }

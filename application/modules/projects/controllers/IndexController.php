@@ -39,7 +39,7 @@ class Projects_IndexController extends FansubCMS_Controller_Action {
         $project = Doctrine::getTable('Projects_Model_Project');
         $this->view->project = $project->findOneBy('name_slug', $name);
     }
-    
+
     public function feedAction()
     {
         $num = $this->request->getParam('entries', 25);
@@ -50,7 +50,7 @@ class Projects_IndexController extends FansubCMS_Controller_Action {
             $num = 100; // prevent from full listings which could take like forever to parse
         }
         $num = round($num, 0); // prevent from floting point values
-        
+
         $q = Doctrine_Query::create();
         $q->from('Projects_Model_EpisodeRelease per')
           ->leftJoin('per.Projects_Model_Episode pe')
@@ -59,14 +59,14 @@ class Projects_IndexController extends FansubCMS_Controller_Action {
           ->andWhere('p.private = ?', 'no')
           ->orderBy('per.released_at DESC')
           ->limit($num);
-          
+
         $this->_generateFeed($q->execute(array(), Doctrine::HYDRATE_RECORD));
     }
-    
+
     # helpers
 
     /**
-     * 
+     *
      * Generates a feed of newest released episodes
      * @param Doctrine_Collection $episodes
      */
@@ -81,10 +81,10 @@ class Projects_IndexController extends FansubCMS_Controller_Action {
             if($episode->Projects_Model_Episode->version > 1) {
                 $epTitle .= 'v' . $episode->Projects_Model_Episode->version;
             }
-            
+
             # url encode project title
             $projUrl = $episode->Projects_Model_Episode->Projects_Model_Project->name_slug;
-            
+
             # add entry
             $entries[]=array(
                     'title'=>$epTitle,

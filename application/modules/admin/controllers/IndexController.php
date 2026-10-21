@@ -21,7 +21,7 @@ class Admin_IndexController extends FansubCMS_Controller_Action
     public function indexAction()
     {
         $server = new stdClass;
-        
+
         foreach($_SERVER as $k => $v) {
             $server->$k = $v;
         }

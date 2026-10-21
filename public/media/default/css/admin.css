@@ -19,8 +19,8 @@ body {
 }
 
 #root a.add2:hover {
-	color: #74864B;
-	text-decoration: none;
+  color: #74864B;
+  text-decoration: none;
 }
 
 #root table tr, #root table td, #root table th {
@@ -75,16 +75,16 @@ body {
     border: 1px solid #36393D;
     margin-left:10px;
 }
-#admin-menu {	
+#admin-menu {
     float: left;
-    width: 250px; 
+    width: 250px;
 }
 
-#admin-menu ul, #admin-menu ul li {	
+#admin-menu ul, #admin-menu ul li {
     padding-left: 5px;
 }
 
-#admin-menu ul li a {	
+#admin-menu ul li a {
     width: 150px;
     font-weight: bold;
 }
@@ -129,7 +129,7 @@ body {
     margin-right: -5px;
     margin-bottom: -5px;
     padding: 2px;
-    background-color: #AAA; 
+    background-color: #AAA;
 }
 
 #root .paginationControl {
@@ -139,79 +139,79 @@ body {
 }
 
 #root .add {
-	padding:5px;
+  padding:5px;
 }
 
 #root .info {
-	padding:5px;
+  padding:5px;
 }
 
 #addnews {
-	padding:5px;
+  padding:5px;
 }
 
 #addproject {
-	padding:5px;
+  padding:5px;
 }
 
 #addprojectepisode {
-	padding:5px;
+  padding:5px;
 }
 
 #addprojectscreenshot {
-	padding:5px;
+  padding:5px;
 }
 
 #adduser {
-	padding:5px;
+  padding:5px;
 }
 
 #addtask {
-	padding:5px;
+  padding:5px;
 }
 
 #profile {
-	padding:5px;
+  padding:5px;
 }
 
 #yes-element {
-	padding:5px;
+  padding:5px;
 }
 
 #no-element {
-	padding:5px;
+  padding:5px;
 }
 
 #editnews {
-	padding:5px;
+  padding:5px;
 }
 
 #editproject {
-	padding:5px;
+  padding:5px;
 }
 
 #editprojectepisode {
-	padding:5px;
+  padding:5px;
 }
 
 #editprojectscreenshot {
-	padding:5px;
+  padding:5px;
 }
 
 #edituser {
-	padding:5px;
+  padding:5px;
 }
 
 #edittask {
-	padding:5px;
+  padding:5px;
 }
 
 #root .success {
-	border-bottom: 1px solid #36393D; 
-	padding: 5px; 
-	background: #0F7;
+  border-bottom: 1px solid #36393D;
+  padding: 5px;
+  background: #0F7;
 }
-	
+
 /* now the styles for the icons in the menus */
 .tableAction span {
     position: absolute;
@@ -245,7 +245,7 @@ body {
     width: 400px;
 }
 
-.zend_form input[type="radio"] { 
+.zend_form input[type="radio"] {
     width: auto;
     margin: auto 5px;
 }

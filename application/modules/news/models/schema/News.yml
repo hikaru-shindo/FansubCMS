@@ -1,6 +1,6 @@
 News_Model_News:
     tableName: news
-    actAs: 
+    actAs:
         Timestampable:
         Sluggable:
             name: title_slug

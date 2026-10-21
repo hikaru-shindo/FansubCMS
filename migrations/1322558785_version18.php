@@ -14,14 +14,14 @@ class Version18 extends Doctrine_Migration_Base
     {
         $this->removeColumn('news', 'publish_date');
     }
-    
+
     public function postUp()
     {
         parent::postUp();
-        
+
         // Set dates for all existing news
         $news = News_Model_NewsTable::getInstance()->findAll();
-               
+
         foreach($news as $article) {
             if($article->public == 'yes') {
                 $article->publish_date = $article->created_at;

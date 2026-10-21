@@ -1,4 +1,4 @@
-<?php 
+<?php
 $freeSpace = disk_free_space(dirname(__FILE__));
 $totalSpace = disk_total_space(dirname(__FILE__));
 $percentSpace = round($freeSpace / $totalSpace * 100, 1);
@@ -16,8 +16,8 @@ if(isset($this->update)) {
 }
 ?>
 <table class="systemInfo">
-	<tr>
-    	<th><?=$this->translate('admin-system-uname')?></th><td><?=php_uname('s');?> <?=php_uname('r');?> <?=php_uname('v');?> <?=php_uname('m');?></td>
+  <tr>
+      <th><?=$this->translate('admin-system-uname')?></th><td><?=php_uname('s');?> <?=php_uname('r');?> <?=php_uname('v');?> <?=php_uname('m');?></td>
     </tr>
     <tr>
         <th><?=$this->translate('admin-system-protocol')?></th><td><?=$this->system->SERVER_PROTOCOL?></td>
@@ -26,7 +26,7 @@ if(isset($this->update)) {
         <th><?=$this->translate('admin-system-host')?></th><td><?=$this->system->HTTP_HOST?></td>
     </tr>
     <tr>
-    	<th><?=$this->translate('admin-system-diskspace')?></th><td><?=$this->filesize($freeSpace)?> / <?=$this->filesize($totalSpace)?> (<?=$percentSpace?>%)</td>
+      <th><?=$this->translate('admin-system-diskspace')?></th><td><?=$this->filesize($freeSpace)?> / <?=$this->filesize($totalSpace)?> (<?=$percentSpace?>%)</td>
     </tr>
     <tr>
         <th><?=$this->translate('admin-system-serverSoftware')?></th><td><?=$this->system->SERVER_SOFTWARE?></td>

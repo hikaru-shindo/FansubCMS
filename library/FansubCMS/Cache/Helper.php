@@ -19,7 +19,7 @@
 
 /**
  * This class should generate the needed cache options and return them
- * 
+ *
  * @package FansubCMS
  * @subpackage Cache
  * @author Hikaru-Shindo <hikaru@animeownage.de>
@@ -28,13 +28,13 @@ class FansubCMS_Cache_Helper {
 
     /**
      * The cache manager
-     * 
+     *
      * @var Zend_Cache_Manager
      */
     protected $_cacheManager;
     /**
      * The instance of this class
-     * 
+     *
      * @var FansubCMS_Cache_Helper
      */
     protected static $_instance = null;
@@ -49,9 +49,9 @@ class FansubCMS_Cache_Helper {
 
     /**
      * Call the cache manager's method if it does not exist
-     * 
+     *
      * @param string $name
-     * @param array $arguments 
+     * @param array $arguments
      */
     public function __call($name, $arguments)
     {
@@ -60,7 +60,7 @@ class FansubCMS_Cache_Helper {
 
     /**
      * Get an instance
-     * 
+     *
      * @return FansubCMS_Cache_Helper
      */
     public static function getInstance()
@@ -74,9 +74,9 @@ class FansubCMS_Cache_Helper {
 
     /**
      * Add a new template
-     * 
+     *
      * @param string $name
-     * @param array $frontendOptions 
+     * @param array $frontendOptions
      */
     public function setCacheTemplate($name, $frontendOptions = array())
     {
@@ -87,16 +87,16 @@ class FansubCMS_Cache_Helper {
                 'file_name_prefix' => 'fansubcms',
                 'cache_dir' => CACHE_PATH
             ));
-        
+
         if(APPLICATION_ENV == 'development') {
             // @todo change backend to blackhole - needs refactoring of ACL !
             $frontendOptions['options']['lifetime'] = 10; // cache should only live 10 seconds
         }
-        
+
         $options = array(
             'frontend' => $frontendOptions,
             'backend' => $backendOptions);
-        
+
         # add a new cache template for this module
         $this->_cacheManager->setCacheTemplate($name, $options);
     }

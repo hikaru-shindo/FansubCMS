@@ -6,65 +6,65 @@ class Version5 extends Doctrine_Migration_Base
 {
     public function up()
     {
-        
+
         $this->dropTable('project_tasks');
         $this->dropTable('project_task_types');
         $this->createTable('project_chapters', array(
-             'id' => 
+             'id' =>
              array(
               'type' => 'integer',
               'primary' => '1',
               'autoincrement' => '1',
               'length' => '8',
              ),
-             'project_id' => 
+             'project_id' =>
              array(
               'type' => 'integer',
               'notnull' => '1',
               'length' => '8',
              ),
-             'number' => 
+             'number' =>
              array(
               'type' => 'integer',
               'length' => '5',
              ),
-             'version' => 
+             'version' =>
              array(
               'type' => 'integer',
               'length' => '2',
              ),
-             'format' => 
+             'format' =>
              array(
               'type' => 'string',
               'length' => '10',
              ),
-             'resolution' => 
+             'resolution' =>
              array(
               'type' => 'string',
               'length' => '10',
              ),
-             'title' => 
+             'title' =>
              array(
               'type' => 'string',
               'length' => '255',
              ),
-             'updated_by' => 
+             'updated_by' =>
              array(
               'type' => 'string',
               'length' => '32',
              ),
-             'released_at' => 
+             'released_at' =>
              array(
               'type' => 'timestamp',
               'length' => '25',
              ),
-             'created_at' => 
+             'created_at' =>
              array(
               'notnull' => '1',
               'type' => 'timestamp',
               'length' => '25',
              ),
-             'updated_at' => 
+             'updated_at' =>
              array(
               'notnull' => '1',
               'type' => 'timestamp',
@@ -72,7 +72,7 @@ class Version5 extends Doctrine_Migration_Base
              ),
              ), array(
              'type' => 'InnoDB',
-             'primary' => 
+             'primary' =>
              array(
               0 => 'id',
              ),
@@ -80,7 +80,7 @@ class Version5 extends Doctrine_Migration_Base
              'charset' => 'utf8',
              ));
         $this->addColumn('projects', 'project_type', 'enum', '', array(
-             'values' => 
+             'values' =>
              array(
               0 => 'fansub',
               1 => 'scanlation',
@@ -93,29 +93,29 @@ class Version5 extends Doctrine_Migration_Base
     public function down()
     {
         $this->createTable('project_task_types', array(
-             'id' => 
+             'id' =>
              array(
               'type' => 'integer',
               'primary' => '1',
               'autoincrement' => '1',
               'length' => '8',
              ),
-             'name' => 
+             'name' =>
              array(
               'type' => 'string',
               'length' => '128',
              ),
-             'description' => 
+             'description' =>
              array(
               'type' => 'string',
               'length' => '255',
              ),
              ), array(
              'type' => 'InnoDB',
-             'indexes' => 
+             'indexes' =>
              array(
              ),
-             'primary' => 
+             'primary' =>
              array(
               0 => 'id',
              ),
@@ -123,19 +123,19 @@ class Version5 extends Doctrine_Migration_Base
              'charset' => 'utf8',
              ));
         $this->createTable('project_tasks', array(
-             'project_episode_id' => 
+             'project_episode_id' =>
              array(
               'type' => 'integer',
               'primary' => '1',
               'length' => '8',
              ),
-             'user_id' => 
+             'user_id' =>
              array(
               'type' => 'integer',
               'primary' => '1',
               'length' => '8',
              ),
-             'project_task_id' => 
+             'project_task_id' =>
              array(
               'type' => 'integer',
               'primary' => '1',
@@ -143,10 +143,10 @@ class Version5 extends Doctrine_Migration_Base
              ),
              ), array(
              'type' => 'InnoDB',
-             'indexes' => 
+             'indexes' =>
              array(
              ),
-             'primary' => 
+             'primary' =>
              array(
               0 => 'project_episode_id',
               1 => 'user_id',
