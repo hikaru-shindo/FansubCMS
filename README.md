@@ -5,7 +5,7 @@
 
 FansubCMS is a CMS designed for the needs of Fansubbers
 and written in PHP with the Zend PHP Framework licensed
-under the GNU GPL Version 3 which is enclosed to the repository
+under the MIT which is enclosed to the repository
 in the file LICENSE.
 
 It provides easy management of your fansubs, news and your
