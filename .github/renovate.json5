@@ -1,0 +1,13 @@
+{
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  extends: [
+    'config:recommended',
+    ':rebaseStalePrs',
+    ':enableVulnerabilityAlerts',
+    ':enableVulnerabilityAlertsWithLabel(vulnerable)',
+  ],
+  ignorePresets: [':prHourlyLimit2'],
+  prHourlyLimit: 5,
+  automerge: false,
+  assigneesFromCodeOwners: true,
+}
